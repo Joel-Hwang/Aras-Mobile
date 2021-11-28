@@ -23,7 +23,7 @@ app.use(
 
 app.get('/', function (req, res) {
     res.writeHead(200);
-    res.end(fs.readFileSync(__dirname + '/view/login.html'));
+    res.end(fs.readFileSync(__dirname + '/view/loginaras.html'));
 });
 
 app.get('/main', function (req, res) {
