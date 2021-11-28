@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html,
+        body {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        div.top {
+            animation: 2s ease 0s 1 slideInFromCenter;
+            padding: 20px;
+            position: relative;
+            background-color: rgba(0, 0, 0, .6);
+            top: 0%;
+            transition: width 3s;
+        }
+
+        @keyframes slideInFromCenter {
+            0% {
+                transform: translateY(100%);
+                background-color: rgba(0, 0, 0, 0);
+            }
+            75%{
+                background-color: rgba(0, 0, 0, 0);
+            }
+            100% {
+                transform: translateY(0);
+                background-color: rgba(0, 0, 0, 6);
+            }
+        }
+
+        h1.head {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            text-align: center;
+            font-size: 32px;
+            transform: translate(-50%, 0%);
+            width: 295px;
+            color: white;
+            border-top: 2px solid rgb(150, 150, 150);
+            border-bottom: 2px solid rgb(150, 150, 150);
+            padding: 16px 0;
+        }
+
+        @keyframes slideshow {
+            0% {
+                opacity: 0;
+            }
+
+            75% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        div.login-form {
+            animation: 3s ease-out 0s 1 slideshow;
+            position: relative;
+            height: 500px;
+            background-color: rgba(0, 0, 0, .6);
+            text-align: center;
+        }
+
+        div.login-form input {
+            background-color: rgba(50, 50, 50, .8);
+            border: none;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            width: 60%;
+            max-width: 400px;
+        }
+
+        div.login-form button {
+            background-color: black;
+            color: white;
+            border: 1px solid white;
+            padding: 18px;
+            font-size: 14pt;
+            position: relative;
+            top: 60px;
+            width: 60%;
+            max-width: 400px;
+            border-radius: 30px;
+        }
+
+        div.login-form button:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        footer {
+            animation: 3s ease-out 0s 1 slideshow;
+            text-align: center;
+            background-color: rgba(0, 0, 0, .6);
+            padding: 10px;
+            position: relative;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="position: absolute; z-index: -1; top: 0px; left: 0px; bottom: 0px; right: 0px; overflow: hidden;">
+        <video autoplay loop muted
+            style="margin: auto; position: absolute; z-index: -1; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 100%; ">
+            <source src="/img/block.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="top">
+        <h1 class="head">
+            <span style="letter-spacing: 14px;">PLM</span>
+            <br>
+            <span style="color: rgb(150,150,150);font-size: 14pt;">product</span>
+            <span style="color: rgb(150,150,150);font-size: 14pt;">lifecycle</span>
+            <span style="color: rgb(150,150,150);font-size: 14pt;">management</span>
+        </h1>
+    </div>
+
+    <div class="login-form">
+        <div style="padding-top: 30px;">
+            <input type="text" placeholder="ID" id="userId">
+        </div>
+        <div style="padding-top: 30px;">
+            <input type="password" placeholder="Password" id="userPw">
+        </div>
+
+
+        <div>
+            <button id="btnLogin">Log In</button>
+        </div>
+
+    </div>
+
+    <footer>
+        <img src="/img/csg.png" width="140px" alt="">
+    </footer>
+    <script>
+
+
+    </script>
+</body>
+
+</html>
