@@ -1,8 +1,8 @@
-var express = require('express');
-var session = require('express-session');
-//var bodyParser = require('body-parser');
-var svc = require('../service/svcUser');
-var router = express.Router();
+let express = require('express');
+let session = require('express-session');
+let svc = require('../service/svcLogin');
+let util = require('../com/com');
+let router = express.Router();
 router.use(express.json());
 //router.use(bodyParser.json());
 //router.use(bodyParser.urlencoded({ extended: false }));
@@ -14,31 +14,28 @@ router.use(session({
 
 
 router.post('/login', async function (req, res) {
-  let id = req.query.userId;
-  let pw = req.query.userPw;
-  let result = await svc.createCommonCode(JSON.stringify(req.body));
-  res.send(result);
+  let id = req.body.userId;
+  let pw = req.body.userPw;
+  let result = await svc.login(id,pw);
+
+  req.session.email = result.value[0].email;
+  req.session.keyed_name = result.value[0].keyed_name;
+  req.session.login_name = result.value[0].login_name;
+
+  res.send({ 
+    status: 200,
+    email:req.session.email, 
+    login_name:req.session.login_name, 
+    keyed_name:req.session.keyed_name 
+  });
+ 
 });
 
 router.post('/logout', async function (req, res) {
-  let result = await svc.retrieveCommonCodeList(JSON.stringify(req.query));
-  res.send(result);
+  //let result = await svc.retrieveCommonCodeList(JSON.stringify(req.query));
+  res.send('');
 });
 
-router.get('/retrieve/commoncode', async function (req, res) {
-  let result = await svc.retrieveCommonCode(req.query.groupCode);
-  res.send(result);
-});
-
-router.post('/update/commoncode', async function (req, res) {
-  let result = await svc.updateCommonCode(req.body.groupCode, JSON.stringify(req.body));
-  res.send(result);
-});
-
-router.post('/delete/commoncode', async function (req, res) {
-  let result = await svc.deleteCommonCode(req.body.groupCode);
-  res.send(result);
-});
 
 
 module.exports = router;

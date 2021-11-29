@@ -15,6 +15,7 @@
     "express-session": "^1.17.1",
     "fs": "0.0.1-security",
     "http": "0.0.1-security",
+    "request": "^2.88.2",
     "socket.io": "^2.3.0"
   }
 }

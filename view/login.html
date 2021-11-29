@@ -25,7 +25,7 @@
 
         @keyframes slideInFromCenter {
             0% {
-                transform: translateY(100%);
+                transform: translateY(200%);
                 background-color: rgba(0, 0, 0, 0);
             }
             75%{
@@ -139,7 +139,7 @@
 
 
         <div>
-            <button id="btnLogin">Log In</button>
+            <button id="btnLogin" onclick="login()">Log In</button>
         </div>
 
     </div>
@@ -147,8 +147,17 @@
     <footer>
         <img src="/img/csg.png" width="140px" alt="">
     </footer>
+    <script src="js/common.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
     <script>
-
+        async function login(){
+            let userId = document.querySelector('#userId').value;
+            let userPw = document.querySelector('#userPw').value;
+            userPw = CryptoJS.MD5(userPw).toString();
+            
+            let result = await postRes('/login',{userId,userPw});
+        
+        }
 
     </script>
 </body>

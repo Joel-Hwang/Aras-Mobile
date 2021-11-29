@@ -33,19 +33,32 @@ function templatePolyfill() {
     }
 }
 
+async function getRes(url){
+    const res = await fetch(url, {
+        method:'GET',
+        headers:{
+            'Content-type':'application/json'
+        }
+    });
+    let resData = await res.json();
+    return resData;
+}
+
+async function postRes(url,body){
+    const res = await fetch(url, {
+        method:'POST',
+        body: JSON.stringify(body),
+        headers:{
+            'Content-type':'application/json'
+        }
+    });
+    let resData = await res.json();
+    return resData;
+}
 
 var common = {
-    session: function () {
-        let result = {};
-        $.ajax({
-            url: "/session",
-            type: "get",
-            contentType: "application/json",
-            async: false,
-            success: function (data) {
-                result = data;
-            }
-        });
+    session: async function () {
+        let result = await getRes('/session');
         return result;
     },
     getTimeString: function (time) {

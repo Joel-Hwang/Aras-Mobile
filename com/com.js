@@ -1,3 +1,5 @@
+
+var request = require("request");
 let com = {
     requestSync: function (options) {
         return new Promise(function (resolve, reject) {
@@ -17,7 +19,7 @@ let com = {
 
     getToken: async function (id, pw) {
         const options = {
-            uri: authServer,
+            uri: global.authServer,
             method: "POST",
             json: true,
             form: {
@@ -26,10 +28,10 @@ let com = {
                 client_id: "IOMApp",
                 username: id,
                 password: pw,
-                database: databaseName,
+                database: global.databaseName,
             }
         };
-        var result = await requestSync(options);
+        var result = await com.requestSync(options);
         return result.access_token;
     }
 }
