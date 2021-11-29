@@ -1,21 +1,33 @@
-var authorityService = {
-    createCommonCode: async function (param) {
-        
-        return 'createCommonCode';
-    },
-    retrieveCommonCodeList: async function (param) {
-        return 'retrieveCommonCodeList';
-    },
-    retrieveCommonCode: async function (groupCode) {
-        return 'retrieveCommonCode';
-    },
-    updateCommonCode: async function (groupCode, param) {
-        return 'updateCommonCode';
-    },
-    deleteCommonCode: async function (groupCode) {
-        return 'deleteCommonCode';
+let util = require('../com/com');
+
+let svcCommon = {
+    getMenuList: async (id) => {
+        let result = [
+            {
+                name: "My Project",
+                form: "Project",
+                view: "../../../guide.html",
+                path: "PMS"
+            },
+            {
+                name: "Lab Test",
+                form: "CS_LabTest",
+                view: "",
+                path: "4. Lab Test"
+            },
+            {
+                name: "PFC",
+                form: "CS_PFC",
+                view: "",
+                path: "5. PFC"
+            }
+        ];
+
+        return result;
+
     }
+
 }
 
 
-module.exports = authorityService;
+module.exports = svcCommon;
