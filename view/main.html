@@ -127,24 +127,35 @@
         async function getMenuList() {
 
             let result = await getRes('/menu/list');
-            let menu = document.querySelector('#menu');
             if (result.status !== 200) return;
             for (let row of result.menulist) {
                 let menuGroup = getMenuGroup(row);
-                menu.appendChild(menuGroup);
                 menuGroup.querySelector('ul').appendChild(getLeafMenu(row));
             }
         }
 
         function getMenuGroup(row){
-            let li = document.createElement('li');
-            li.textContent = row.path;
-            li.setAttribute('id', row.path);
-            li.classList.add('menu');
-            let ul = document.createElement('ul');
-            li.appendChild(ul);
-            return li;
+            let menu = document.querySelector('#menu');
+
+            let paths = row.path.split('/');
+            for(let i = 0; i<paths.length; i++){
+                if(menu.querySelector('li[name="'+paths[i]+'"]')) continue;
+                let parent = menu.querySelector('li[name="'+paths[i-1]+'"] ul');
+                if(!parent) parent = menu;
+
+                let li = document.createElement('li');
+                li.textContent = paths[i];
+                li.setAttribute('name', paths[i]);
+                li.classList.add('menu');
+                li.style.paddingLeft = parseInt(parent.style.paddingLeft,10)+5+'px';
+                let ul = document.createElement('ul');
+                li.appendChild(ul);
+
+                parent.appendChild(li);
+            }
+            return menu.querySelector('li[name="'+paths[paths.length-1]+'"]');
         }
+
         function getLeafMenu(row){
             let li = document.createElement('li');
             li.textContent = row.name;

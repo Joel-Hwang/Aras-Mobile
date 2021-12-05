@@ -20,6 +20,12 @@ let svcCommon = {
                 form: "CS_PFC",
                 view: "",
                 path: "5. PFC"
+            },
+            {
+                name: "AddinHelper",
+                form: "CS_AddinHelper",
+                view: "",
+                path: "Administarator/Utils"
             }
         ];
 
