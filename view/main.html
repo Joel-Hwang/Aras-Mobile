@@ -84,7 +84,15 @@
         li.menu {
             padding-left: 12px;
             margin-bottom: 15px;
-            font-size: 1rem;
+            font-size: 0.8rem;
+        }
+        li.menu ul {
+            padding: 5px 10px;
+            margin: 0px;
+        }
+
+        ul.fold {
+            display: none;
         }
 
         iframe {
@@ -103,10 +111,10 @@
 
     <main>
         <div id="sidebar" class="sidebar-hidden">
-            <div style="padding: 12px; font:bold 1.2rem Roboto">
+            <div style="padding: 12px; font:bold 14px Roboto">
                 <span>Contents</span>
             </div>
-            <ul id="menu" style="margin: 0px;padding: 0px 12px;">
+            <ul id="menu" style="margin-top: 20px;padding: 0px 12px;">
             </ul>
 
         </div>
@@ -120,7 +128,7 @@
 
     <script>
         window.onload = () => {
-            getMenuList()
+            getMenuList();
 
         }
 
@@ -144,12 +152,19 @@
                 if(!parent) parent = menu;
 
                 let li = document.createElement('li');
-                li.textContent = paths[i];
+                let span = document.createElement('span');
+                span.textContent = '📁 '+paths[i];
+                li.appendChild(span);
                 li.setAttribute('name', paths[i]);
                 li.classList.add('menu');
                 li.style.paddingLeft = parseInt(parent.style.paddingLeft,10)+5+'px';
                 let ul = document.createElement('ul');
+                ul.classList.add('fold');
+                li.appendChild(span);
                 li.appendChild(ul);
+                span.addEventListener('click',() => {
+                    li.querySelector('ul').classList.toggle('fold');
+                }); 
 
                 parent.appendChild(li);
             }
@@ -158,7 +173,7 @@
 
         function getLeafMenu(row){
             let li = document.createElement('li');
-            li.textContent = row.name;
+            li.textContent = '👟 '+row.name;
             li.setAttribute('data-form', row.form);
             li.setAttribute('data-view', row.view);
             li.classList.add('menu');

@@ -21,6 +21,7 @@ router.post('/login', async function (req, res) {
   req.session.email = result.value[0].email;
   req.session.keyed_name = result.value[0].keyed_name;
   req.session.login_name = result.value[0].login_name;
+  req.session.pw = pw;
 
   res.send({ 
     status: 200,

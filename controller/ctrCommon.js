@@ -14,8 +14,9 @@ router.use(session({
 
 
 router.get('/menu/list', async function (req, res) {
-  let id = req.session.userId||'';
-  let result = await svc.getMenuList(id);
+  let id = req.session.login_name||'';
+  let pw = req.session.pw||'';
+  let result = await svc.getMenuList(id,pw);
 
   res.send({ 
     status: 200,
