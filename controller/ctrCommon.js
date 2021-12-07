@@ -14,13 +14,25 @@ router.use(session({
 
 
 router.get('/menu/list', async function (req, res) {
-  let id = req.session.login_name||'';
-  let pw = req.session.pw||'';
-  let result = await svc.getMenuList(id,pw);
+  let token = await util.getToken(req);
+  let result = await svc.getMenuList(token,req.session.login_name);
 
   res.send({ 
     status: 200,
     menulist:result
+  });
+ 
+});
+
+router.get('/form', async function (req, res) {
+  let token = await util.getToken(req);
+  let itemTypeId = req.body.itemTypeId;
+  let classification = req.body.classification;
+  let result = await svc.getForm(token,itemTypeId,classification);
+
+  res.send({ 
+    status: 200,
+    result:result
   });
  
 });

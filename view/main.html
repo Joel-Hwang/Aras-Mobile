@@ -145,7 +145,7 @@
         function getMenuGroup(row){
             let menu = document.querySelector('#menu');
 
-            let paths = row.path.split('/');
+            let paths = row.category.split('/');
             for(let i = 0; i<paths.length; i++){
                 if(menu.querySelector('li[name="'+paths[i]+'"]')) continue;
                 let parent = menu.querySelector('li[name="'+paths[i-1]+'"] ul');
@@ -173,9 +173,9 @@
 
         function getLeafMenu(row){
             let li = document.createElement('li');
-            li.textContent = '👟 '+row.name;
-            li.setAttribute('data-form', row.form);
-            li.setAttribute('data-view', row.view);
+            li.textContent = '👟 '+row.label;
+            li.setAttribute('data-form', row.id);
+            li.setAttribute('data-view', row.id);
             li.classList.add('menu');
             return li;
         }

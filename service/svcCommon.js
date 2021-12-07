@@ -1,76 +1,65 @@
 let util = require('../com/com');
 
 let svcCommon = {
-    getMenuList: async (id,pw) => {
-        let sql = `
-        WITH TREE_QUERY
-        AS (
-        	SELECT C.ID, C.NAME
-        	  FROM innovator.[USER] A
-        	 INNER JOIN innovator.ALIAS B ON B.SOURCE_ID = A.ID
-        	 INNER JOIN innovator.[IDENTITY] C ON B.RELATED_ID = C.ID
-        	 WHERE A.LOGIN_NAME = '${id}'
-        	 UNION ALL
-        	 SELECT A.ID, A.NAME FROM innovator.[IDENTITY] A where a.NAME = 'world'
-        	 UNION ALL
-        	 SELECT C.ID, C.NAME
-        	  FROM innovator.MEMBER B
-        	  INNER JOIN innovator.[IDENTITY] C ON C.ID = B.SOURCE_ID
-        	  INNER JOIN TREE_QUERY D ON D.ID =  B.RELATED_ID
+    getMenuList: async (token,id) => {
         
-        )
+        let sql = `EXEC M_Menu ${id}`;
+        const options = {
+            uri: global.apiServer + "/method.CS_CallProcedure",
+            method: "POST",
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+            body:{
+                sql:sql
+            },
+            json:true,
+          };
+          var result = await util.requestSync(options);
+  
+          return result.Item;
+    },
 
-        select A.ID, A.LABEL, B.CATEGORY, C.NAME
-          from innovator.ITEMTYPE A
-         inner join innovator.TOC_ACCESS B ON A.ID = B.SOURCE_ID
-         inner join innovator.[IDENTITY] C on B.RELATED_ID = C.ID
-         where c.id in (SELECT ID from TREE_QUERY)
-         order by B.CATEGORY, A.LABEL
-        `;
-        let token = await util.getToken(id,pw);
+    getForm: async (token,itemTypeId,classification) => {
+        let sql = `
+   select A.FORM_CLASSIFICATION
+        , D.CONTAINER
+        , D.FIELD_TYPE
+        , D.PROPERTYTYPE_ID
+        , D.HTML_CODE
+        , D.IS_VISIBLE
+        , D.IS_DISABLED
+        , D.NAME
+        , D.LABEL
+        , D.LABEL_KO
+        , D.POSITIONING
+        , D.WIDTH
+        , D.X
+        , D.Y
+     from innovator.[view] A with(nolock)
+    inner join innovator.form B with(nolock) 
+       on A.RELATED_ID = B.ID
+    inner join innovator.body C with(nolock)
+       on B.ID = C.SOURCE_ID
+    inner join innovator.field D with(nolock)
+       on D.SOURCE_ID = C.ID
+    where A.SOURCE_ID = '${itemTypeId}'
+      AND ISNULL(A.FORM_CLASSIFICATION,'') = '${classification}'`;
+
         const options = {
             uri: global.apiServer + "/method.ZX_Apply_SQL",
             method: "POST",
             headers: {
-              Authorization: "Bearer " + token,
+                Authorization: "Bearer " + token,
             },
-            form:{
+            body:{
                 sql:sql
-            }
+            },
+            json:true,
           };
           var result = await util.requestSync(options);
   
-          return JSON.parse(result);
-/*
-        let result = [
-            {
-                name: "My Project",
-                form: "Project",
-                view: "../../../guide.html",
-                path: "PMS"
-            },
-            {
-                name: "Lab Test",
-                form: "CS_LabTest",
-                view: "",
-                path: "4. Lab Test"
-            },
-            {
-                name: "PFC",
-                form: "CS_PFC",
-                view: "",
-                path: "5. PFC"
-            },
-            {
-                name: "AddinHelper",
-                form: "CS_AddinHelper",
-                view: "",
-                path: "Administarator/Utils"
-            }
-        ];
-
-        return result;*/
-
+          return result.Item;
     }
 
 }
