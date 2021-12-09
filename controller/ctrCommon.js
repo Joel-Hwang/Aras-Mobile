@@ -24,9 +24,9 @@ router.get('/menu/list', async function (req, res) {
  
 });
 
-router.get('/form', async function (req, res) {
+router.get('/form/:itemTypeId', async function (req, res) {
   let token = await util.getToken(req);
-  let itemTypeId = req.body.itemTypeId;
+  let itemTypeId = req.params.itemTypeId;
   let classification = req.body.classification;
   let result = await svc.getForm(token,itemTypeId,classification);
 

@@ -174,9 +174,13 @@
         function getLeafMenu(row){
             let li = document.createElement('li');
             li.textContent = '👟 '+row.label;
-            li.setAttribute('data-form', row.id);
+            li.setAttribute('data-itemtype', row.id);
             li.setAttribute('data-view', row.id);
             li.classList.add('menu');
+            li.onclick = (e) => {
+                let itemTypeId = li.dataset.itemtype;
+                let result = await getRes('/form/'+itemTypeId);
+            }
             return li;
         }
 
