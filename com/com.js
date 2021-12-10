@@ -45,7 +45,7 @@ let com = {
         return result.access_token;
     },
     getToken3: async function (req) {
-        let id = req.session.login_name||'';
+        let id = req.session.userId||'';
         let pw = req.session.pw||'';
         return await com.getToken2(id,pw);
     }

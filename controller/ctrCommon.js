@@ -15,7 +15,7 @@ router.use(session({
 
 router.get('/menu/list', async function (req, res) {
   let token = await util.getToken(req);
-  let result = await svc.getMenuList(token,req.session.login_name);
+  let result = await svc.getMenuList(token,req.session.userId);
 
   res.send({ 
     status: 200,
@@ -32,7 +32,21 @@ router.get('/form/:itemTypeId', async function (req, res) {
 
   res.send({ 
     status: 200,
-    result:result
+    data:result
+  });
+ 
+});
+
+router.get('/permission/:itemTypeId', async function (req, res) {
+  let token = await util.getToken(req);
+  let userId = req.session.userId;
+  let itemTypeId = req.params.itemTypeId;
+ 
+  let result = await svc.getPermission(token,userId,itemTypeId);
+
+  res.send({ 
+    status: 200,
+    data:result
   });
  
 });

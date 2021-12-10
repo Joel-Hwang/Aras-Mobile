@@ -60,7 +60,32 @@ let svcCommon = {
           var result = await util.requestSync(options);
   
           return result.Item;
+    },
+
+    getPermission: async (token, userId, itemTypeId) => {
+        let sql = `EXEC M_Permission ${userId} ${itemTypeId}`;
+        const options = {
+            uri: global.apiServer + "/method.CS_CallProcedure",
+            method: "POST",
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+            body:{
+                sql:sql
+            },
+            json:true,
+          };
+          var result = await util.requestSync(options);
+  
+          return result.Item;
+         //true or false
+  //canAdd
+  //get
+  //update
+  //delete
     }
+
+    
 
 }
 
