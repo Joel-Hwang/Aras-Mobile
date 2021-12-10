@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
@@ -60,7 +61,8 @@
             background-color: #eee;
             z-index: 10;
             flex-shrink: 0;
-            box-shadow: 5px 0 8px rgba(0, 0, 0, .24), 3px 0 4px rgba(0, 0, 0, .24)
+            box-shadow: 5px 0 8px rgba(0, 0, 0, .24), 3px 0 4px rgba(0, 0, 0, .24);
+            overflow-y: auto;
         }
 
         .sidebar-hidden {
@@ -91,13 +93,17 @@
 
         li.menu {
             padding-left: 12px;
-            margin-bottom: 15px;
-            font-size: 0.8rem;
+            margin-bottom: 20px;
+            font-size: 1rem;
         }
 
         li.menu ul {
-            padding: 5px 10px;
+            padding: 20px 5px 10px 5px;
             margin: 0px;
+        }
+
+        li.menu:active{
+            color:red;
         }
 
         ul.fold {
@@ -120,9 +126,20 @@
             color: #333;
             background-color: #f7f7f7;
             box-shadow: 0 1px 3px rgba(0, 0, 0, .16), 0 1px 2px rgba(0, 0, 0, .56);
-            width: 280px;
+            width: calc(100% - 20px);
             margin: 10px 10px 2px 10px;
             padding: 7px;
+        }
+
+        .fa {
+            margin-right: 10px;
+        }
+
+        i.leaf {
+            color: rgb(200, 200, 200);
+            font-size: 0.3rem;
+            top: -3px;
+            position: relative
         }
     </style>
 </head>
@@ -135,27 +152,30 @@
 
     <main>
         <div id="sidebar" class="sidebar-hidden">
-            <div style="padding: 12px; font:bold 14px Roboto">
+            <div id="sidebarTitle" style="padding: 12px; font:bold 1rem Roboto">
                 <span>Contents</span>
             </div>
             <ul id="menu" style="margin-top: 20px;padding: 0px 12px;">
             </ul>
-
+            <div id="sidebar2" style="display: none;">
+                <div onclick="moveBack()" style="margin: 10px 0px 5px 10px; font-size: 1rem;"><i
+                        class="fa fa-arrow-left"></i><span id="sidebar2Title">ZX_LabTest</span></div>
+                <div>
+                    <button id="btnCreate" type="button" class="sidebar-second-button"><i class="fa fa-plus-circle"
+                            style="color: rgb(6, 70, 53)"></i><span id="sidebar2Create">Create New
+                            ZX_LabTest</span></button>
+                </div>
+                <div>
+                    <button id="btnSearch" type="button" class="sidebar-second-button"><i class="fa fa-search"
+                            style="color: rgb(22, 24, 83);"></i><span id="sidebar2Search">Search
+                            ZX_LabTest</span></button>
+                </div>
+            </div>
         </div>
-        <div id="sidebar2" class="sidebar">
-            <div>
-                <- ZX_LabTest</div>
-                    <div>
-                        <button id="btnConnect" type="button" class="sidebar-second-button">Create New
-                            ZX_LabTest</button>
-                    </div>
-                    <div>
-                        <button id="btnConnect" type="button" class="sidebar-second-button">Search ZX_LabTest</button>
-                    </div>
-            </div>
-            <div class="main-fix">
-                <iframe src="arasbody.html" frameborder="0" width="100%" height="100%"></iframe>
-            </div>
+
+        <div class="main-fix">
+            <iframe src="arasbody.html" frameborder="0" width="100%" height="100%"></iframe>
+        </div>
     </main>
 
 
@@ -188,7 +208,7 @@
 
                 let li = document.createElement('li');
                 let span = document.createElement('span');
-                span.textContent = '📁 ' + paths[i];
+                span.innerHTML = '<i class="fa fa-folder" style="color:rgb(236, 179, 101)"></i>' + paths[i];
                 li.appendChild(span);
                 li.setAttribute('name', paths[i]);
                 li.classList.add('menu');
@@ -199,6 +219,12 @@
                 li.appendChild(ul);
                 span.addEventListener('click', () => {
                     li.querySelector('ul').classList.toggle('fold');
+
+                    if (li.querySelector('ul').classList.contains('fold'))
+                        span.innerHTML = '<i class="fa fa-folder" style="color:rgb(236, 179, 101)"></i>' + paths[i];
+                    else {
+                        span.innerHTML = '<i class="fa fa-folder-open" style="color:rgb(236, 179, 101)"></i>' + paths[i];
+                    }
                 });
 
                 parent.appendChild(li);
@@ -208,7 +234,7 @@
 
         function getLeafMenu(row) {
             let li = document.createElement('li');
-            li.textContent = '👟 ' + row.label;
+            li.innerHTML = '<i class="fa fa-circle leaf"></i>' + row.label;
             li.setAttribute('data-itemtype', row.id);
             li.setAttribute('data-view', row.id);
             li.classList.add('menu');
@@ -216,11 +242,33 @@
                 let itemTypeId = li.dataset.itemtype;
                 let result = await getRes('/permission/' + itemTypeId);
                 if (result.status !== 200) return;
+                let sidebarTitle = document.querySelector('#sidebarTitle');
+                let menu = document.querySelector('#menu');
+                let sidebar2 = document.querySelector('#sidebar2');
+                let sidebar2Title = document.querySelector('#sidebar2Title');
+                let sidebar2Create = document.querySelector('#sidebar2Create');
+                let sidebar2Search = document.querySelector('#sidebar2Search');
+                sidebar2Title.textContent = li.textContent;
+                sidebar2Create.textContent = 'Create New ' + li.textContent;
+                sidebar2Search.textContent = 'Search ' + li.textContent;
+                sidebarTitle.style.display = 'none';
+                menu.style.display = 'none';
+                sidebar2.style.display = '';
+
                 console.log(result.data.can_add);
                 console.log(result.data.can_get);
                 debugger;
             }
             return li;
+        }
+
+        function moveBack() {
+            let sidebarTitle = document.querySelector('#sidebarTitle');
+            let menu = document.querySelector('#menu');
+            let sidebar2 = document.querySelector('#sidebar2');
+            sidebarTitle.style.display = '';
+            menu.style.display = '';
+            sidebar2.style.display = 'none';
         }
 
         function toggleSidebar(id) {
