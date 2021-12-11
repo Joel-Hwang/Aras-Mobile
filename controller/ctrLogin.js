@@ -17,15 +17,14 @@ router.post('/login', async function (req, res) {
   let id = req.body.userId;
   let pw = req.body.userPw;
   let result = await svc.login(id,pw);
+  if(result == null) res.send({ status: 500 });
 
-  req.session.email = result.value[0].email;
-  req.session.keyed_name = result.value[0].keyed_name;
-  req.session.userId = result.value[0].login_name;
+  req.session.keyed_name = result.keyed_name;
+  req.session.userId = result.login_name;
   req.session.pw = pw;
 
   res.send({ 
     status: 200,
-    email:req.session.email, 
     userId:req.session.userId, 
     keyed_name:req.session.keyed_name 
   });

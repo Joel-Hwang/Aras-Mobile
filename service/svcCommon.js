@@ -1,23 +1,13 @@
 let util = require('../com/com');
+const axios = require("axios");
 
 let svcCommon = {
     getMenuList: async (token,id) => {
-        
         let sql = `EXEC M_Menu ${id}`;
-        const options = {
-            uri: global.apiServer + "/method.CS_CallProcedure",
-            method: "POST",
-            headers: {
-                Authorization: "Bearer " + token,
-            },
-            body:{
-                sql:sql
-            },
-            json:true,
-          };
-          var result = await util.requestSync(options);
-  
-          return result.Item;
+        let res = await axios.post(global.apiServer + "/method.CS_CallProcedure", 
+        {sql:sql}, { headers: {Authorization: "Bearer " + token} });
+        if(res == null || res.data == null) return null;
+        return res.data.Item;
     },
 
     getForm: async (token,itemTypeId,classification) => {
@@ -46,43 +36,19 @@ let svcCommon = {
     where A.SOURCE_ID = '${itemTypeId}'
       AND ISNULL(A.FORM_CLASSIFICATION,'') = '${classification}'`;
 
-        const options = {
-            uri: global.apiServer + "/method.ZX_Apply_SQL",
-            method: "POST",
-            headers: {
-                Authorization: "Bearer " + token,
-            },
-            body:{
-                sql:sql
-            },
-            json:true,
-          };
-          var result = await util.requestSync(options);
-  
-          return result.Item;
+        let res = await axios.post(global.apiServer + "/method.ZX_Apply_SQL", 
+        {sql:sql}, { headers: {Authorization: "Bearer " + token} });
+        if(res == null || res.data == null) return null;
+        return res.data.Item;
     },
 
     getPermission: async (token, userId, itemTypeId) => {
         let sql = `EXEC M_Permission ${userId} ${itemTypeId}`;
-        const options = {
-            uri: global.apiServer + "/method.CS_CallProcedure",
-            method: "POST",
-            headers: {
-                Authorization: "Bearer " + token,
-            },
-            body:{
-                sql:sql
-            },
-            json:true,
-          };
-          var result = await util.requestSync(options);
-  
-          return result.Item;
-         //true or false
-  //canAdd
-  //get
-  //update
-  //delete
+
+        let res = await axios.post(global.apiServer + "/method.CS_CallProcedure", 
+        {sql:sql}, { headers: {Authorization: "Bearer " + token} });
+        if(res == null || res.data == null) return null;
+        return res.data.Item;
     }
 
     

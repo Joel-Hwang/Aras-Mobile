@@ -102,8 +102,8 @@
             margin: 0px;
         }
 
-        li.menu:active{
-            color:red;
+        span:active{
+            font-weight: bold;
         }
 
         ul.fold {
@@ -158,7 +158,7 @@
             <ul id="menu" style="margin-top: 20px;padding: 0px 12px;">
             </ul>
             <div id="sidebar2" style="display: none;">
-                <div onclick="moveBack()" style="margin: 10px 0px 5px 10px; font-size: 1rem;"><i
+                <div onclick="moveBack()" style="margin: 10px 0px 5px 10px; font-size: 1rem;cursor: pointer;"><i
                         class="fa fa-arrow-left"></i><span id="sidebar2Title">ZX_LabTest</span></div>
                 <div>
                     <button id="btnCreate" type="button" class="sidebar-second-button"><i class="fa fa-plus-circle"
@@ -234,7 +234,9 @@
 
         function getLeafMenu(row) {
             let li = document.createElement('li');
-            li.innerHTML = '<i class="fa fa-circle leaf"></i>' + row.label;
+            let span = document.createElement('span');
+            span.innerHTML = '<i class="fa fa-circle leaf"></i>' + row.label;
+            li.appendChild(span);
             li.setAttribute('data-itemtype', row.id);
             li.setAttribute('data-view', row.id);
             li.classList.add('menu');
@@ -255,9 +257,17 @@
                 menu.style.display = 'none';
                 sidebar2.style.display = '';
 
-                console.log(result.data.can_add);
-                console.log(result.data.can_get);
-                debugger;
+                if(result.data.can_add){
+                    document.querySelector('#btnCreate').style.display = '';
+                }else{
+                    document.querySelector('#btnCreate').style.display = 'none';
+                }
+                
+                if(result.data.can_get){
+                    document.querySelector('#btnSearch').style.display = '';
+                }else{
+                    document.querySelector('#btnSearch').style.display = 'none';
+                }
             }
             return li;
         }

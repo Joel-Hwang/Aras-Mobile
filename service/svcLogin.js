@@ -1,25 +1,39 @@
 let util = require('../com/com');
+const axios = require("axios");
 
 let svcLogin = {
-    login : async (id, pw) => {
-        let token = await util.getToken(id,pw);
-        const options = {
-          uri: global.apiServer + "/user",
-          method: "GET",
-          qs: {
-            $filter: "login_name eq '" + id + "'",
-          },
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        };
-        var result = await util.requestSync(options);
+    login: async (id, pw) => {
+        let token = await util.getToken(id, pw);
+        let res = await axios.get(global.apiServer + "/user",
+        {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+            params:{
+                $filter: "login_name eq '" + id + "'",
+            }
 
-        return JSON.parse(result);
-       
+        });
+        if(res == null || res.data == null) return null;
+        return res.data.value[0];
+        /*const options = {
+            url: global.apiServer + "/user",
+            method: "GET",
+            responseType:"JSON",
+            qs: {
+                $filter: "login_name eq '" + id + "'",
+            },
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        };
+        var result = await util.send(options);
+
+        return JSON.parse(result);*/
+
     },
     createCommonCode: async function (param) {
-        
+
         return 'createCommonCode';
     },
     retrieveCommonCodeList: async function (param) {
