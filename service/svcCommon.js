@@ -11,6 +11,7 @@ let svcCommon = {
     },
 
     getForm: async (token,itemTypeId,classification) => {
+        if(!classification) classification = '';
         let sql = `
    select A.FORM_CLASSIFICATION
         , D.CONTAINER
@@ -21,7 +22,6 @@ let svcCommon = {
         , D.IS_DISABLED
         , D.NAME
         , D.LABEL
-        , D.LABEL_KO
         , D.POSITIONING
         , D.WIDTH
         , D.X
@@ -39,7 +39,7 @@ let svcCommon = {
         let res = await axios.post(global.apiServer + "/method.ZX_Apply_SQL", 
         {sql:sql}, { headers: {Authorization: "Bearer " + token} });
         if(res == null || res.data == null) return null;
-        return res.data.Item;
+        return res.data["SOAP-ENV:Envelope"]["SOAP-ENV:Body"].ApplyItemResponse.Result.Item;
     },
 
     getPermission: async (token, userId, itemTypeId) => {

@@ -95,6 +95,7 @@
             padding-left: 12px;
             margin-bottom: 20px;
             font-size: 1rem;
+            cursor: pointer;
         }
 
         li.menu ul {
@@ -161,12 +162,12 @@
                 <div onclick="moveBack()" style="margin: 10px 0px 5px 10px; font-size: 1rem;cursor: pointer;"><i
                         class="fa fa-arrow-left"></i><span id="sidebar2Title">ZX_LabTest</span></div>
                 <div>
-                    <button id="btnCreate" type="button" class="sidebar-second-button"><i class="fa fa-plus-circle"
+                    <button id="btnCreate" type="button" class="sidebar-second-button" onclick="create()"><i class="fa fa-plus-circle"
                             style="color: rgb(6, 70, 53)"></i><span id="sidebar2Create">Create New
                             ZX_LabTest</span></button>
                 </div>
                 <div>
-                    <button id="btnSearch" type="button" class="sidebar-second-button"><i class="fa fa-search"
+                    <button id="btnSearch" type="button" class="sidebar-second-button" onclick="search()"><i class="fa fa-search"
                             style="color: rgb(22, 24, 83);"></i><span id="sidebar2Search">Search
                             ZX_LabTest</span></button>
                 </div>
@@ -184,7 +185,6 @@
     <script>
         window.onload = () => {
             getMenuList();
-
         }
 
         async function getMenuList() {
@@ -241,8 +241,7 @@
             li.setAttribute('data-view', row.id);
             li.classList.add('menu');
             li.onclick = async (e) => {
-                let itemTypeId = li.dataset.itemtype;
-                let result = await getRes('/permission/' + itemTypeId);
+                let result = await getRes('/permission/' + li.dataset.itemtype);
                 if (result.status !== 200) return;
                 let sidebarTitle = document.querySelector('#sidebarTitle');
                 let menu = document.querySelector('#menu');
@@ -251,6 +250,7 @@
                 let sidebar2Create = document.querySelector('#sidebar2Create');
                 let sidebar2Search = document.querySelector('#sidebar2Search');
                 sidebar2Title.textContent = li.textContent;
+                sidebar2Title.dataset.itemType = li.dataset.itemtype;
                 sidebar2Create.textContent = 'Create New ' + li.textContent;
                 sidebar2Search.textContent = 'Search ' + li.textContent;
                 sidebarTitle.style.display = 'none';
@@ -290,6 +290,17 @@
                 sidebar.classList.add('sidebar');
                 sidebar.classList.remove('sidebar-hidden');
             }
+        }
+
+        async function create(){
+            let sidebar2Title = document.querySelector('#sidebar2Title');
+            let result = await getRes('/form/' + sidebar2Title.dataset.itemType);
+            debugger;
+
+        }
+
+        async function search(){
+            let sidebar2Title = document.querySelector('#sidebar2Title');
         }
 
     </script>

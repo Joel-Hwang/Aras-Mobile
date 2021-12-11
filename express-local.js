@@ -29,11 +29,21 @@ app.use(
 );
 
 app.get('/', function (req, res) {
+    if(req.session.userId){
+        res.writeHead(200);
+        res.end(fs.readFileSync(__dirname + '/view/main.html'));
+        return;
+    }
     res.writeHead(200);
     res.end(fs.readFileSync(__dirname + '/view/login.html'));
 });
 
 app.get('/main', function (req, res) {
+    if(!req.session.userId){
+        res.writeHead(200);
+        res.end(fs.readFileSync(__dirname + '/view/login.html'));
+        return;
+    }
     res.writeHead(200);
     res.end(fs.readFileSync(__dirname + '/view/main.html'));
 });
