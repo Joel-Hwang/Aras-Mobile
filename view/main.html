@@ -175,7 +175,7 @@
         </div>
 
         <div class="main-fix">
-            <iframe src="arasbody.html" frameborder="0" width="100%" height="100%"></iframe>
+            <iframe id="arasbody" frameborder="0" width="100%" height="100%"></iframe>
         </div>
     </main>
 
@@ -294,9 +294,9 @@
 
         async function create(){
             let sidebar2Title = document.querySelector('#sidebar2Title');
-            let result = await getRes('/form/' + sidebar2Title.dataset.itemType);
-            debugger;
-
+            let arasbody = document.querySelector('#arasbody');
+            arasbody.src = 'arasbody/'+sidebar2Title.dataset.itemType;
+            sessionStorage.itemTypeId=sidebar2Title.dataset.itemType;
         }
 
         async function search(){

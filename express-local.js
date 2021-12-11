@@ -3,6 +3,8 @@ var session = require('express-session');
 var app = express();
 var cors = require('cors');
 var fs = require('fs');
+let commonSvc = require('./service/svcCommon');
+let util = require('./com/com');
 const http = require('http').createServer(app);
 
 //global.apiServer = "http://203.228.101.197/digitalpcc/server/odata";
@@ -29,7 +31,7 @@ app.use(
 );
 
 app.get('/', function (req, res) {
-    if(req.session.userId){
+    if (req.session.userId) {
         res.writeHead(200);
         res.end(fs.readFileSync(__dirname + '/view/main.html'));
         return;
@@ -39,7 +41,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/main', function (req, res) {
-    if(!req.session.userId){
+    if (!req.session.userId) {
         res.writeHead(200);
         res.end(fs.readFileSync(__dirname + '/view/login.html'));
         return;
@@ -48,9 +50,28 @@ app.get('/main', function (req, res) {
     res.end(fs.readFileSync(__dirname + '/view/main.html'));
 });
 
+app.get('/arasbody/:itemTypeId', async function (req, res) {
+    if (!req.session.userId) {
+        res.writeHead(200);
+        res.end(fs.readFileSync(__dirname + '/view/login.html'));
+        return;
+    }
+    let token = await util.getToken(req);
+    let itemTypeId = req.params.itemTypeId;
+    let itemType = await commonSvc.getItemType(token, itemTypeId);
+    let fileName = '';
+    if (fs.existsSync(__dirname + '/view/' + itemType.name + '.html')) {
+        fileName = itemType.name;
+    } else {
+        fileName = 'arasbody';
+    }
 
+    
+    res.writeHead(200);
+    res.end(fs.readFileSync(__dirname + '/view/' + fileName + '.html'));
+});
 
 http.listen(9000, async function () {
-    
-  console.log('9000 connected');
+
+    console.log('9000 connected');
 });
