@@ -49,6 +49,12 @@
 		.form-floating {
 			margin: 0px 10px;
 		}
+
+		.form-control:disabled,
+		.form-control[readonly] {
+			background-color: #fafafa;
+			opacity: 1;
+		}
 	</style>
 </head>
 
@@ -173,6 +179,7 @@
 	</div>
 
 	<script src="/js/common.js"></script>
+	<script src="/js/field.js"></script>
 	<script>
 		window.onload = async () => {
 			let result = await getRes('/form/' + sessionStorage.itemTypeId);
@@ -180,15 +187,9 @@
 			if (result.status !== 200) return;
 
 			let main = document.querySelector('#main');
-			main.innerHTML = '';
 			for (let row of result.data) {
-				main.innerHTML += `
-				<div class="input-group input-group-sm mb-3" style="max-width: 200px;">
-			<span class="input-group-text" id="inputGroup-sizing-sm">${row.label}</span>
-			<input type="text" class="form-control" aria-label="Sizing example input"
-				aria-describedby="inputGroup-sizing-sm" value="4tertert">
-		</div>
-				`;
+				let field = fieldFactory.create(row.field_type, row.label, 'test', 1);
+				main.appendChild(field);
 			}
 		}
 	</script>

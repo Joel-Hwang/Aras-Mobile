@@ -1,5 +1,3 @@
-let server = "http://localhost/InnovatorServer/server/odata";
-let database = "InnovatorSolutions";
 
 function toast(msg) {
     var node = document.createElement('div');
