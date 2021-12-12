@@ -10,8 +10,8 @@ const http = require('http').createServer(app);
 //global.apiServer = "http://203.228.101.197/digitalpcc/server/odata";
 //global.authServer = "http://203.228.101.197/digitalpcc/oauthserver/connect/token";
 //global.databaseName = "DigitalPCC_Test";
-global.apiServer = "http://192.168.0.4/innovatorServer/server/odata";
-global.authServer = "http://192.168.0.4/innovatorServer/oauthserver/connect/token";
+global.apiServer = "http://bb7f-39-113-129-49.ngrok.io/innovatorServer/server/odata";
+global.authServer = "http://bb7f-39-113-129-49.ngrok.io/innovatorServer/oauthserver/connect/token";
 global.databaseName = "InnovatorSolutions";
 
 

@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
@@ -55,6 +56,18 @@
 			background-color: #fafafa;
 			opacity: 1;
 		}
+		.fa {
+            margin-right: 10px;
+        }
+		@media screen and (max-width: 768px) {
+			.btn-save .btn-label {
+				display: none;
+			}
+			.btn-save .fa {
+				margin: 0px;
+				font-size: 1.5rem;
+			}
+		}
 	</style>
 </head>
 
@@ -62,8 +75,7 @@
 	<h4><img src="/img/8.jpg" width="15px" style="margin-top: -3px;" /> 4Tertert</h4>
 	<hr>
 	<div style="padding: 10px;">
-		<button id="btnConnect" type="button" class="btn btn-primary">Edit</button>
-		<button id="btnConnect" type="button" class="btn btn-success">Save</button>
+		<button id="btnConnect" type="button" class="btn btn-success btn-save"><i class="fa fa-save"></i><span class="btn-label">Save</span></button>
 		<button id="btnConnect" type="button" class="btn btn-primary">Done</button>
 		<button id="btnConnect" type="button" class="btn btn-success">Workflow</button>
 
@@ -105,13 +117,19 @@
 			<input type="text" class="form-control" aria-label="Sizing example input"
 				aria-describedby="inputGroup-sizing-sm" value="4tertert">
 		</div>
-		<div class="input-group input-group-sm mb-3" style="max-width: 300px;">
-			<span class="input-group-text" id="inputGroup-sizing-sm">Type</span>
-			<select id="dbms" class="form-select form-select-sm" style="padding: 5px 20px;">
-				<option value="oracle" disabled>Oracle</option>
-				<option value="mssql" selected>MSSQL</option>
-			</select>
-
+		<div class="input-group mb-3">
+			<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+				aria-expanded="false">Dropdown</button>
+			<ul class="dropdown-menu">
+				<li><a class="dropdown-item" href="#">Action</a></li>
+				<li><a class="dropdown-item" href="#">Another action</a></li>
+				<li><a class="dropdown-item" href="#">Something else here</a></li>
+				<li>
+					<hr class="dropdown-divider">
+				</li>
+				<li><a class="dropdown-item" href="#">Separated link</a></li>
+			</ul>
+			<input type="text" class="form-control" aria-label="Text input with dropdown button">
 		</div>
 	</div>
 
@@ -188,7 +206,7 @@
 
 			let main = document.querySelector('#main');
 			for (let row of result.data) {
-				let field = fieldFactory.create(row.field_type, row.label, 'test', 1);
+				let field = fieldFactory.create(row.field_type, row.label);
 				main.appendChild(field);
 			}
 		}
