@@ -36,6 +36,10 @@ let svcCommon = {
         , D.WIDTH
         , D.X
         , D.Y
+        , D.LEGEND
+		, E.NAME AS Prop_Name
+        , CASE WHEN D.FIELD_TYPE = 'groupbox' then 0
+		  ELSE 1 END AS sort
      from innovator.[view] A with(nolock)
     inner join innovator.form B with(nolock) 
        on A.RELATED_ID = B.ID
@@ -43,8 +47,11 @@ let svcCommon = {
        on B.ID = C.SOURCE_ID
     inner join innovator.field D with(nolock)
        on D.SOURCE_ID = C.ID
+     left outer join innovator.property E with(nolock)
+	   on E.ID = D.PROPERTYTYPE_ID
     where A.SOURCE_ID = '${itemTypeId}'
-      AND ISNULL(A.FORM_CLASSIFICATION,'') = '${classification}'`;
+      AND ISNULL(A.FORM_CLASSIFICATION,'') = '${classification}'
+    order by sort, ROUND(D.Y,-1), D.X`;
 
         let res = await axios.post(global.apiServer + "/method.ZX_Apply_SQL",
             { sql: sql }, { headers: { Authorization: "Bearer " + token } });

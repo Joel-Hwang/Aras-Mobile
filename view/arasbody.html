@@ -56,22 +56,33 @@
 			background-color: #fafafa;
 			opacity: 1;
 		}
+
 		.fa {
-            margin-right: 10px;
-        }
+			margin-right: 10px;
+		}
+
 		@media screen and (max-width: 768px) {
+
 			.btn-edit .btn-label,
 			.btn-save .btn-label,
 			.btn-done .btn-label,
 			.btn-workflow .btn-label {
 				display: none;
 			}
+
 			.btn-edit .fa,
 			.btn-save .fa,
 			.btn-done .fa,
 			.btn-workflow .fa {
-				margin: 5px 15px;
+				margin: 5px 10px;
 				font-size: 1.5rem;
+			}
+
+			.btn-edit,
+			.btn-save,
+			.btn-done,
+			.btn-workflow {
+				margin-left: 10px;
 			}
 		}
 	</style>
@@ -81,15 +92,19 @@
 	<h4> 4Tertert</h4>
 	<hr>
 	<div style="padding: 10px;">
-		<button id="btnConnect" type="button" class="btn btn-primary btn-edit"><i class="fa fa-edit"></i><span class="btn-label">Edit</span></button>
-		<button id="btnConnect" type="button" class="btn btn-outline-primary btn-save"><i class="fa fa-save"></i><span class="btn-label">Save</span></button>
-		<button id="btnConnect" type="button" class="btn btn-primary btn-done"><i class="fa fa-check"></i><span class="btn-label">Done</span></button>
-		<button id="btnConnect" type="button" class="btn btn-success btn-workflow"><i class="fa fa-code-fork" aria-hidden="true"></i><span class="btn-label">Workflow</span></button>
+		<button id="btnConnect" type="button" class="btn btn-primary btn-edit"><i class="fa fa-edit"></i><span
+				class="btn-label">Edit</span></button>
+		<button id="btnConnect" type="button" class="btn btn-outline-primary btn-save"><i class="fa fa-save"></i><span
+				class="btn-label">Save</span></button>
+		<button id="btnConnect" type="button" class="btn btn-primary btn-done"><i class="fa fa-check"></i><span
+				class="btn-label">Done</span></button>
+		<button id="btnConnect" type="button" class="btn btn-success btn-workflow"><i class="fa fa-code-fork"
+				aria-hidden="true"></i><span class="btn-label">Workflow</span></button>
 
 	</div>
 
 	<div id="main" style="display: flex; flex-wrap: wrap;">
-		
+
 	</div>
 
 	<div class="accordion" id="accordionExample">
@@ -161,8 +176,12 @@
 
 			let main = document.querySelector('#main');
 			for (let row of result.data) {
-				let field = fieldFactory.create(row.field_type, row.label);
-				main.appendChild(field);
+				let field = fieldFactory.create(row);
+				if (row.container) {
+					document.querySelector(`#${row.container}`).appendChild(field);
+				} else {
+					main.appendChild(field);
+				}
 			}
 		}
 	</script>

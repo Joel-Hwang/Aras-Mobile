@@ -1,41 +1,41 @@
 let fieldFactory = {
-    createText: (label, value, disabled) => {
+    createText: (row) => {
         let div = document.createElement('div');
         div.innerHTML = `
         <div class="input-group input-group-sm mb-3" style="max-width: 200px;">
-            <span class="input-group-text" id="inputGroup-sizing-sm">${label}</span>
-            <input type="text" class="form-control" aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-sm" ${disabled ? 'disabled' : ''} value="${value}">
+            <span class="input-group-text" id="inputGroup-sizing-sm">${row.label}</span>
+            <input type="text" class="form-control" id="${row.prop_name}" aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-sm" ${row.is_disabled ==="1" ? 'disabled' : ''}>
         </div> `;
         return div.firstElementChild;
     },
-    createTextArea: (label, value, disabled) => {
+    createTextArea: (row) => {
         let div = document.createElement('div');
         div.innerHTML = `
-        <div class="input-group">
-            <span class="input-group-text">${label}</span>
-            <textarea class="form-control" aria-label="${label}" ${disabled ? 'disabled' : ''}>${value}</textarea>
+        <div class="input-group input-group-sm">
+            <span class="input-group-text">${row.label}</span>
+            <textarea class="form-control" id="${row.prop_name}"  aria-label="${row.label}" ${row.is_disabled ==="1" ? 'disabled' : ''}></textarea>
         </div> `;
         return div.firstElementChild;
     },
-    createCheckBox: (label, value, disabled) => {
+    createCheckBox: (row) => {
         let div = document.createElement('div');
         div.innerHTML = `
-        <div class="input-group mb-3">
+        <div class="input-group input-group-sm mb-3">
             <div class="input-group-text">
-                <input class="form-check-input mt-0" type="checkbox" value="${value}" ${disabled ? 'disabled' : ''}  ria-label="Checkbox for following text input">
+                <input class="form-check-input mt-0" id="${row.prop_name}" type="checkbox"  ${row.is_disabled ==="1" ? 'disabled' : ''}  ria-label="Checkbox for following text input">
             </div>
-            <input type="text" class="form-control" aria-label="Text input with checkbox" disabled value="${label}">
+            <input type="text" class="form-control" aria-label="Text input with checkbox" disabled value="${row.label}">
         </div>`;
         return div.firstElementChild;
     },
-    createDropDown: (label, value, disabled) => {
+    createDropDown: (row) => {
         let div = document.createElement('div');
         div.innerHTML = `
-        <div class="input-group mb-3">
-          <span class="input-group-text" id="inputGroup-sizing-sm">${label}</span>
-          <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-            <option selected>${value?value:'Select'}</option>
+        <div class="input-group input-group-sm mb-3">
+          <span class="input-group-text" id="inputGroup-sizing-sm">${row.label}</span>
+          <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="${row.prop_name}"  ${row.is_disabled ==="1" ? 'disabled' : ''}>
+            <option selected>'Select'</option>
             <option value="1">One</option>
             <option value="2">Two</option>
             <option value="3">Three</option>
@@ -43,23 +43,33 @@ let fieldFactory = {
         </div>`;
         return div.firstElementChild;
     },
-    create: (fieldType, label, value = '', disabled) => {
-        switch (fieldType) {
+    createGrupbox: (row) => {
+        let div = document.createElement('div');
+        div.innerHTML = `
+        <h6 style=" background-color: white; margin-bottom: -20px; margin-left: 10px;">${row.legend?row.legend:''}</h6>
+        <div id="${row.name}" style="display: flex;flex-wrap: wrap;border: 1px solid #ccc;padding: 20px 10px 0px 5px;margin: 20px 10px;">
+        </div>`;
+        return div;
+    },
+    create: (row) => {
+        switch (row.field_type) {
             case "text":
-                return fieldFactory.createText(label, value, disabled);
+                return fieldFactory.createText(row);
                 break;
             case "textarea":
-                return fieldFactory.createTextArea(label, value, disabled);
+                return fieldFactory.createTextArea(row);
                 break;
             case "checkbox":
-                return fieldFactory.createCheckBox(label, value, disabled);
+                return fieldFactory.createCheckBox(row);
                 break;
             case "dropdown":
-                return fieldFactory.createDropDown(label, value, disabled);
+                return fieldFactory.createDropDown(row);
                 break;
-
+            case "groupbox":
+                return fieldFactory.createGrupbox(row);
+                break;
             default:
-                return fieldFactory.createText(label, value, disabled);
+                return fieldFactory.createText(row);
                 break;
         }
     }
