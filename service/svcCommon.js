@@ -34,12 +34,12 @@ let svcCommon = {
         , D.LABEL
         , D.POSITIONING
         , D.WIDTH
-        , D.X
-        , D.Y
+        , CASE WHEN D.POSITIONING = 'static' THEN 0 ELSE D.X END AS X
+        , CASE WHEN D.POSITIONING = 'static' THEN 0 ELSE D.Y END AS Y
         , D.LEGEND
+        , D.ORIENTATION
 		, E.NAME AS Prop_Name
-        , CASE WHEN D.FIELD_TYPE = 'groupbox' then 0
-		  ELSE 1 END AS sort
+        , CASE WHEN ISNULL(D.CONTAINER,'') = '' then 0 ELSE 1 END AS sort
      from innovator.[view] A with(nolock)
     inner join innovator.form B with(nolock) 
        on A.RELATED_ID = B.ID
@@ -50,8 +50,9 @@ let svcCommon = {
      left outer join innovator.property E with(nolock)
 	   on E.ID = D.PROPERTYTYPE_ID
     where A.SOURCE_ID = '${itemTypeId}'
+      AND FIELD_TYPE != 'html'
       AND ISNULL(A.FORM_CLASSIFICATION,'') = '${classification}'
-    order by sort, ROUND(D.Y,-1), D.X`;
+    order by sort, ROUND(D.Y,-1), D.X, D.SORT_ORDER`;
 
         let res = await axios.post(global.apiServer + "/method.ZX_Apply_SQL",
             { sql: sql }, { headers: { Authorization: "Bearer " + token } });
