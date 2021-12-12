@@ -46,7 +46,7 @@ let fieldFactory = {
     createGrupbox: (row) => {
         let div = document.createElement('div');
         div.innerHTML = `
-        <h6 style=" background-color: white; margin-bottom: -20px; margin-left: 10px;">${row.legend?row.legend:''}</h6>
+        <h6 style=" background-color: white; margin-bottom: -20px; margin-left: 10px;">${row.legend?row.legend:'&nbsp;'}</h6>
         <div id="${row.name}" style="display: flex;flex-wrap: wrap;border: 1px solid #ccc;padding: 20px 10px 0px 5px;margin: 20px 10px;">
         </div>`;
         return div;
