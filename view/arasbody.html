@@ -60,11 +60,17 @@
             margin-right: 10px;
         }
 		@media screen and (max-width: 768px) {
-			.btn-save .btn-label {
+			.btn-edit .btn-label,
+			.btn-save .btn-label,
+			.btn-done .btn-label,
+			.btn-workflow .btn-label {
 				display: none;
 			}
-			.btn-save .fa {
-				margin: 0px;
+			.btn-edit .fa,
+			.btn-save .fa,
+			.btn-done .fa,
+			.btn-workflow .fa {
+				margin: 5px 15px;
 				font-size: 1.5rem;
 			}
 		}
@@ -72,71 +78,20 @@
 </head>
 
 <body>
-	<h4><img src="/img/8.jpg" width="15px" style="margin-top: -3px;" /> 4Tertert</h4>
+	<h4> 4Tertert</h4>
 	<hr>
 	<div style="padding: 10px;">
-		<button id="btnConnect" type="button" class="btn btn-success btn-save"><i class="fa fa-save"></i><span class="btn-label">Save</span></button>
-		<button id="btnConnect" type="button" class="btn btn-primary">Done</button>
-		<button id="btnConnect" type="button" class="btn btn-success">Workflow</button>
+		<button id="btnConnect" type="button" class="btn btn-primary btn-edit"><i class="fa fa-edit"></i><span class="btn-label">Edit</span></button>
+		<button id="btnConnect" type="button" class="btn btn-outline-primary btn-save"><i class="fa fa-save"></i><span class="btn-label">Save</span></button>
+		<button id="btnConnect" type="button" class="btn btn-primary btn-done"><i class="fa fa-check"></i><span class="btn-label">Done</span></button>
+		<button id="btnConnect" type="button" class="btn btn-success btn-workflow"><i class="fa fa-code-fork" aria-hidden="true"></i><span class="btn-label">Workflow</span></button>
 
 	</div>
 
 	<div id="main" style="display: flex; flex-wrap: wrap;">
-		<div class="input-group input-group-sm mb-3" style="max-width: 200px;">
-			<span class="input-group-text" id="inputGroup-sizing-sm">Part Number</span>
-			<input type="text" class="form-control" aria-label="Sizing example input"
-				aria-describedby="inputGroup-sizing-sm" value="4tertert">
-		</div>
-		<div class="input-group input-group-sm mb-3" style="max-width: 150px;">
-			<span class="input-group-text" id="inputGroup-sizing-sm">Revision</span>
-			<input type="text" class="form-control" aria-label="Sizing example input"
-				aria-describedby="inputGroup-sizing-sm" value="4tertert">
-		</div>
-		<div class="input-group input-group-sm mb-3" style="max-width: 300px;">
-			<span class="input-group-text" id="inputGroup-sizing-sm">State</span>
-			<input type="text" class="form-control" aria-label="Sizing example input"
-				aria-describedby="inputGroup-sizing-sm" value="4tertert">
-		</div>
-		<div class="input-group input-group-sm mb-3" style="max-width: 300px;">
-			<span class="input-group-text" id="inputGroup-sizing-sm">Name</span>
-			<input type="text" class="form-control" aria-label="Sizing example input"
-				aria-describedby="inputGroup-sizing-sm" value="4tertert">
-		</div>
-		<div class="input-group input-group-sm mb-3" style="max-width: 180px;">
-			<span class="input-group-text" id="inputGroup-sizing-sm">Unit</span>
-			<input type="text" class="form-control" aria-label="Sizing example input"
-				aria-describedby="inputGroup-sizing-sm" value="4tertert">
-		</div>
-		<div class="input-group input-group-sm mb-3" style="max-width: 220px;">
-			<span class="input-group-text" id="inputGroup-sizing-sm">Make/Buy</span>
-			<input type="text" class="form-control" aria-label="Sizing example input"
-				aria-describedby="inputGroup-sizing-sm" value="4tertert">
-		</div>
-		<div class="input-group input-group-sm mb-3" style="max-width: 260px;">
-			<span class="input-group-text" id="inputGroup-sizing-sm">Cost</span>
-			<input type="text" class="form-control" aria-label="Sizing example input"
-				aria-describedby="inputGroup-sizing-sm" value="4tertert">
-		</div>
-		<div class="input-group mb-3">
-			<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-				aria-expanded="false">Dropdown</button>
-			<ul class="dropdown-menu">
-				<li><a class="dropdown-item" href="#">Action</a></li>
-				<li><a class="dropdown-item" href="#">Another action</a></li>
-				<li><a class="dropdown-item" href="#">Something else here</a></li>
-				<li>
-					<hr class="dropdown-divider">
-				</li>
-				<li><a class="dropdown-item" href="#">Separated link</a></li>
-			</ul>
-			<input type="text" class="form-control" aria-label="Text input with dropdown button">
-		</div>
+		
 	</div>
 
-	<div class="form-floating mb-3">
-		<input type="email" class="form-control" id="floatingInput" value="4tertert">
-		<label for="floatingInput">Part Number</label>
-	</div>
 	<div class="accordion" id="accordionExample">
 		<div class="accordion-item">
 			<h2 class="accordion-header" id="headingOne">
