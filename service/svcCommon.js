@@ -39,7 +39,10 @@ let svcCommon = {
         , D.LEGEND
         , D.ORIENTATION
 		, E.NAME AS Prop_Name
-        , CASE WHEN ISNULL(D.CONTAINER,'') = '' then 0 ELSE 1 END AS sort
+        , CASE WHEN D.FIELD_TYPE = 'IMAGE' THEN 999
+               WHEN D.FIELD_TYPE = 'FILE ITEM' THEN 990
+               WHEN ISNULL(D.CONTAINER,'') = '' then 0 
+          ELSE 1 END AS sort
      from innovator.[view] A with(nolock)
     inner join innovator.form B with(nolock) 
        on A.RELATED_ID = B.ID

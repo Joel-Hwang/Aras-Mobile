@@ -24,7 +24,7 @@ let fieldFactory = {
         div.innerHTML = `
         <div class="input-group input-group-sm">
             <span class="input-group-text">${row.label}</span>
-            <textarea class="form-control" id="${row.prop_name}"  aria-label="${row.label}" ${row.is_disabled === "1" ? 'disabled' : ''}></textarea>
+            <textarea class="form-control" rows="1" id="${row.prop_name}"  aria-label="${row.label}" ${row.is_disabled === "1" ? 'disabled' : ''}></textarea>
         </div> `;
         return div.firstElementChild;
     },
@@ -35,6 +35,17 @@ let fieldFactory = {
             <label for="formFileSm" class="form-label">${row.label}</label>
             <input class="form-control form-control-sm" id="formFileSm" type="file">
         </div>`;
+        return div.firstElementChild;
+    },
+    createImage: (row) => {
+        let div = document.querySelector('div');
+        div.innerHTML = `
+        <div class="mb-3">
+            <label for="formFileSm" class="form-label">${row.label}</label>
+            <input class="form-control form-control-sm" id="formFileSm" type="file">
+            <img src="/img/card2.jpg" width="50px"/>
+        </div>`;
+        return div.firstElementChild;
     },
     createCheckBox: (row) => {
         let div = document.createElement('div');
@@ -89,9 +100,11 @@ let fieldFactory = {
             case "groupbox":
                 return fieldFactory.createGrupbox(row);
                 break;
-            case "file":
+            case "file item":
                 return fieldFactory.createFile(row);
                 break;
+            case "image":
+                return fieldFactory.createImage(row);
             default:
                 return fieldFactory.createText(row);
                 break;
