@@ -13,6 +13,11 @@ router.use(session({
   saveUninitialized: true
 }));
 
+router.get('/transaction', async (req,res) =>{
+  let token = await util.getToken(req);
+  let result = await svc.getTransaction(token);
+  res.send(token);
+});
 
 router.get('/menu/list', async function (req, res) {
   let token = await util.getToken(req);
