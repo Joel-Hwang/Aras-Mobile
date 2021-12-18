@@ -60,7 +60,8 @@ async function httpRes(type, url, headers, body){
         body: body,
         headers:headers
     });
-    return res;
+    let resData = await res.text();
+    return resData;
 }
 
 var common = {

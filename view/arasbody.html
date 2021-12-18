@@ -168,13 +168,15 @@
 
 	<script src="/js/common.js"></script>
 	<script src="/js/field.js"></script>
-	<script src="/js/file.js"></script>
+	<script src="/js/fileUtil.js"></script>
 	<script>
+		let fieldList = [];
 		window.onload = async () => {
 			let result = await getRes('/form/' + sessionStorage.itemTypeId);
 			console.log(result);
 			if (result.status !== 200) return;
-
+			
+			fieldList = result.data;
 			let main = document.querySelector('#main');
 			for (let row of result.data) {
 				let field = fieldFactory.create(row);
@@ -187,7 +189,15 @@
 		}
 
 		async function save(){
-			await file.upload();
+			let body = {};
+			let itemTypeName = sessionStorage.itemTypeName;
+			for(let row of fieldList){
+				let fieldVal = await fieldFactory.getValue(row);
+				if(fieldVal === null) continue;
+				body[row.prop_name] = fieldVal;
+			}
+			let result = await postRes(`/create/${itemTypeName}`,body);
+			console.log(result);
 		}
 	</script>
 </body>

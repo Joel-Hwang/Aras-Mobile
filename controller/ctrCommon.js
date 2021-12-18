@@ -13,13 +13,13 @@ router.use(session({
   saveUninitialized: true
 }));
 
-router.get('/transaction', async (req,res) =>{
+router.get('/transaction', async (req, res) => {
   let token = await util.getToken(req);
   let transaction = await svc.getTransaction(token);
   res.send({
     status: 200,
     token: token,
-    id:transaction
+    id: transaction
   });
 });
 
@@ -61,13 +61,24 @@ router.get('/permission/:itemTypeId', async function (req, res) {
 
 });
 
+router.post('/create/:itemType', async function (req, res) {
+  let itemType = req.params.itemType;
+  let body = req.body;
+  let token = await util.getToken(req);
+  let result = await svc.createItem(token, itemType, body);
+
+  res.send({
+    status: 200,
+    data: result
+  });
+
+});
 
 
 router.post('/logout', async function (req, res) {
   //let result = await svc.retrieveCommonCodeList(JSON.stringify(req.query));
   res.send('');
 });
-
 
 
 module.exports = router;

@@ -76,6 +76,13 @@ let svcCommon = {
             { sql: sql }, { headers: { Authorization: "Bearer " + token } });
         if (res == null || res.data == null) return null;
         return res.data.Item;
+    },
+
+    createItem : async(token, itemType, body) => {
+        let res = await axios.post(`${global.apiServer}/${itemType}`,body,
+        { headers: { Authorization: "Bearer " + token } });
+        if (res == null || res.data == null) return null;
+        return res.data;
     }
 
 

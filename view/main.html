@@ -238,6 +238,7 @@
             span.innerHTML = '<i class="fa fa-circle leaf"></i>' + row.label;
             li.appendChild(span);
             li.setAttribute('data-itemtype', row.id);
+            li.setAttribute('data-itemtype-name', row.itemtype_name);
             li.setAttribute('data-view', row.id);
             li.classList.add('menu');
             li.onclick = async (e) => {
@@ -251,6 +252,7 @@
                 let sidebar2Search = document.querySelector('#sidebar2Search');
                 sidebar2Title.textContent = li.textContent;
                 sidebar2Title.dataset.itemType = li.dataset.itemtype;
+                sidebar2Title.dataset.itemTypeName = li.dataset.itemtypeName;
                 sidebar2Create.textContent = 'Create New ' + li.textContent;
                 sidebar2Search.textContent = 'Search ' + li.textContent;
                 sidebarTitle.style.display = 'none';
@@ -297,6 +299,7 @@
             let arasbody = document.querySelector('#arasbody');
             arasbody.src = 'arasbody/'+sidebar2Title.dataset.itemType;
             sessionStorage.itemTypeId=sidebar2Title.dataset.itemType;
+            sessionStorage.itemTypeName=sidebar2Title.dataset.itemTypeName;
         }
 
         async function search(){

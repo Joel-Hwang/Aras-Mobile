@@ -1,16 +1,18 @@
-let file = {
-    upload: async function(){
-        debugger;
+let fileUtil = {
+    vaultUrl : "http://192.168.0.4/innovatorServer/vault/odata/",
+    serverUrl : "http://192.168.0.4/innovatorServer/Server/odata/",
+    upload: async function(propName){
         let transaction = await getRes('/transaction');
         let file_id = generateNewGuid();
-        let my_file = getFileInput("_file");
-        
+        let my_file = getFileInput(propName);
+        if(my_file === null) return null;
         var upload_res = await uploadFile(my_file, file_id, transaction.id, transaction.token);
         var commit_res = await commitTransaction(my_file, file_id, transaction.id, transaction.token);
         var commit_str = commit_res.toString();
         commit_str = commit_str.substring(commit_str.indexOf("{"), commit_str.lastIndexOf("}") + 1);
         var commit_obj = JSON.parse(commit_str);
         console.log(commit_obj);
+        return commit_obj.id;
     },
     download: function(){
         
@@ -36,7 +38,8 @@ function generateNewGuid() {
 function getFileInput(prop) {
     var file = document.getElementById(prop).files[0];
     if (file === undefined) {
-        throw new Error("Please select a file to upload.");
+        return null;
+        //throw new Error("Please select a file to upload.");
     }
     return file;
 }
@@ -59,7 +62,7 @@ async function uploadFile(file, file_id, transaction_id, token, chunk_size = 100
         var headers = getUploadHeaders(escapeURL(file.name), start, end - 1, size, transaction_id, token);
 
         // make the request to upload this file content
-        var upload_url = "http://192.168.0.4/innovatorServer/vault/odata/vault.UploadFile?fileId=" + file_id;
+        var upload_url = fileUtil.vaultUrl+"vault.UploadFile?fileId=" + file_id;
         var chunk = file.slice(start, end);
         var response = await httpRes("POST", upload_url, headers, chunk);
         results.push(response);
@@ -104,7 +107,7 @@ async function commitTransaction(file, file_id, transaction_id, token) {
     // build the headers and body for the commit request
     var boundary = "batch_" + file_id;
     var commit_headers = getCommitHeaders(boundary, transaction_id, token);
-    var commit_url = "http://192.168.0.4/innovatorServer/vault/odata/vault.CommitTransaction";
+    var commit_url = fileUtil.vaultUrl+"vault.CommitTransaction";
 
     // it's important to use the \r\n end of line character, otherwise commit will fail
     var EOL = "\r\n";
@@ -116,7 +119,7 @@ async function commitTransaction(file, file_id, transaction_id, token) {
     commit_body += "Content-Type: application/http";
     commit_body += EOL;
     commit_body += EOL;
-    commit_body += "POST " + "http://192.168.0.4/innovatorServer/Server/odata/File HTTP/1.1";
+    commit_body += "POST " + fileUtil.serverUrl + "File HTTP/1.1";
     commit_body += EOL;
     commit_body += "Content-Type: application/json";
     commit_body += EOL;

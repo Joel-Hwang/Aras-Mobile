@@ -42,7 +42,7 @@ let fieldFactory = {
         div.innerHTML = `
         <div class="mb-3">
             <label for="formFileSm" class="form-label">${row.label}</label>
-            <input class="form-control form-control-sm" id="formFileSm" type="file">
+            <input class="form-control form-control-sm" id="${row.prop_name}" type="file">
             <img src="/img/card2.jpg" width="50px"/>
         </div>`;
         return div.firstElementChild;
@@ -108,6 +108,24 @@ let fieldFactory = {
             default:
                 return fieldFactory.createText(row);
                 break;
+        }
+    },
+    getValue: async (row) => {
+        let fileId = '';
+        switch(row.field_type){
+            case "file item":
+                fileId = await fileUtil.upload(row.prop_name);
+                return fileId;
+            break;
+            case "image":
+                fileId = await fileUtil.upload(row.prop_name);
+                return fileId;
+            break;
+            case "text":
+                return document.querySelector(`#${row.prop_name}`).value;
+            break;
+            default:
+                return null;
         }
     }
 }
