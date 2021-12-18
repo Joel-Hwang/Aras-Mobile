@@ -3,7 +3,7 @@ const axios = require("axios");
 
 let svcCommon = {
     getTransaction: async (token) => {
-        let res = await axios.post(global.apiServer + "/vault/odata/vault.BeginTransaction",
+        let res = await axios.post(global.rootServer + "/vault/odata/vault.BeginTransaction",
             { }, { headers: { Authorization: "Bearer " + token } });
         if (res == null || res.data == null) return null;
         return res.data.transactionId;

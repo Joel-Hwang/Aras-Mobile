@@ -15,8 +15,12 @@ router.use(session({
 
 router.get('/transaction', async (req,res) =>{
   let token = await util.getToken(req);
-  let result = await svc.getTransaction(token);
-  res.send(token);
+  let transaction = await svc.getTransaction(token);
+  res.send({
+    status: 200,
+    token: token,
+    id:transaction
+  });
 });
 
 router.get('/menu/list', async function (req, res) {

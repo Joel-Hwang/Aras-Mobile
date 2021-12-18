@@ -92,13 +92,13 @@
 	<h4> 4Tertert</h4>
 	<hr>
 	<div style="padding: 10px;">
-		<button id="btnConnect" type="button" class="btn btn-primary btn-edit"><i class="fa fa-edit"></i><span
+		<button id="btnEdit" type="button" class="btn btn-primary btn-edit"><i class="fa fa-edit"></i><span
 				class="btn-label">Edit</span></button>
-		<button id="btnConnect" type="button" class="btn btn-outline-primary btn-save"><i class="fa fa-save"></i><span
+		<button id="btnSave" type="button" class="btn btn-outline-primary btn-save" onclick="save()"><i class="fa fa-save"></i><span
 				class="btn-label">Save</span></button>
-		<button id="btnConnect" type="button" class="btn btn-primary btn-done"><i class="fa fa-check"></i><span
+		<button id="btnDone" type="button" class="btn btn-primary btn-done"><i class="fa fa-check"></i><span
 				class="btn-label">Done</span></button>
-		<button id="btnConnect" type="button" class="btn btn-success btn-workflow"><i class="fa fa-code-fork"
+		<button id="btnWf" type="button" class="btn btn-success btn-workflow"><i class="fa fa-code-fork"
 				aria-hidden="true"></i><span class="btn-label">Workflow</span></button>
 
 	</div>
@@ -168,6 +168,7 @@
 
 	<script src="/js/common.js"></script>
 	<script src="/js/field.js"></script>
+	<script src="/js/file.js"></script>
 	<script>
 		window.onload = async () => {
 			let result = await getRes('/form/' + sessionStorage.itemTypeId);
@@ -183,6 +184,10 @@
 					main.appendChild(field);
 				}
 			}
+		}
+
+		async function save(){
+			await file.upload();
 		}
 	</script>
 </body>

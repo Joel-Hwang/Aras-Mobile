@@ -54,6 +54,15 @@ async function postRes(url,body){
     return resData;
 }
 
+async function httpRes(type, url, headers, body){
+    const res = await fetch(url, {
+        method:type,
+        body: body,
+        headers:headers
+    });
+    return res;
+}
+
 var common = {
     session: async function () {
         let result = await getRes('/session');

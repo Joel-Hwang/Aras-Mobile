@@ -29,16 +29,16 @@ let fieldFactory = {
         return div.firstElementChild;
     },
     createFile: (row) => {
-        let div = document.querySelector('div');
+        let div = document.createElement('div');
         div.innerHTML = `
         <div class="mb-3">
             <label for="formFileSm" class="form-label">${row.label}</label>
-            <input class="form-control form-control-sm" id="formFileSm" type="file">
+            <input class="form-control form-control-sm" id="${row.prop_name}" type="file">
         </div>`;
         return div.firstElementChild;
     },
     createImage: (row) => {
-        let div = document.querySelector('div');
+        let div = document.createElement('div');
         div.innerHTML = `
         <div class="mb-3">
             <label for="formFileSm" class="form-label">${row.label}</label>
