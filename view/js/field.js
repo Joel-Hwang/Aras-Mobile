@@ -111,6 +111,7 @@ let fieldFactory = {
         }
     },
     getValue: async (row) => {
+        debugger;
         let fileId = '';
         switch(row.field_type){
             case "file item":
@@ -124,6 +125,8 @@ let fieldFactory = {
             case "text":
                 return document.querySelector(`#${row.prop_name}`).value;
             break;
+            case "checkbox":
+                return document.querySelector(`#${row.prop_name}`).value==='on'?1:0;
             default:
                 return null;
         }
