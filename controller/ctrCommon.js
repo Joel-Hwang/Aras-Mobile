@@ -74,6 +74,19 @@ router.post('/create/:itemType', async function (req, res) {
 
 });
 
+router.post('/update/:itemType', async function (req, res) {
+  let itemType = req.params.itemType;
+  let body = req.body;
+  let token = await util.getToken(req);
+  let result = await svc.updateItem(token, itemType, body);
+
+  res.send({
+    status: 200,
+    data: result
+  });
+
+});
+
 
 router.post('/logout', async function (req, res) {
   //let result = await svc.retrieveCommonCodeList(JSON.stringify(req.query));

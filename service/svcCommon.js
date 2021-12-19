@@ -83,6 +83,13 @@ let svcCommon = {
         { headers: { Authorization: "Bearer " + token } });
         if (res == null || res.data == null) return null;
         return res.data;
+    },
+
+    updateItem : async(token, itemType, body) => {
+        let res = await axios.patch(`${global.apiServer}/${itemType}('${body.id}')`,body,
+        { headers: { Authorization: "Bearer " + token } });
+        if (res == null || res.data == null) return null;
+        return res.data;
     }
 
 

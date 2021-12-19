@@ -171,6 +171,7 @@
 	<script src="/js/fileUtil.js"></script>
 	<script>
 		let fieldList = [];
+		let itemId = '';
 		window.onload = async () => {
 			let result = await getRes('/form/' + sessionStorage.itemTypeId);
 			console.log(result);
@@ -196,8 +197,17 @@
 				if(fieldVal === null) continue;
 				body[row.prop_name] = fieldVal;
 			}
-			let result = await postRes(`/create/${itemTypeName}`,body);
+			let result = {};
+			if(itemId===''){
+				result = await postRes(  `/create/${itemTypeName}`,body);
+
+			}else{
+				body.id = itemId;
+				result = await postRes(  `/update/${itemTypeName}`,body);
+			}
 			console.log(result);
+			alert(result);
+			itemId = result.data.id;
 		}
 	</script>
 </body>
