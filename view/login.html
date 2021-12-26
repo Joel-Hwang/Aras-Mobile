@@ -155,12 +155,14 @@
             let userPw = document.querySelector('#userPw').value;
             userPw = CryptoJS.MD5(userPw).toString();
             
+            common.showLoading();
             let result = await postRes('/login',{userId,userPw});
             if(result.status == 200){
                 sessionStorage.userId = result.userId;
                 sessionStorage.keyed_name = result.keyed_name;
                 location.href = "/main";
             }
+            common.hideLoading();
         }
 
     </script>

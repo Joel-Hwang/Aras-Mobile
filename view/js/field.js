@@ -22,7 +22,7 @@ let fieldFactory = {
     createTextArea: (row) => {
         let div = document.createElement('div');
         div.innerHTML = `
-        <div class="input-group input-group-sm">
+        <div class="input-group input-group-sm mb-3">
             <span class="input-group-text">${row.label}</span>
             <textarea class="form-control" rows="1" id="${row.prop_name}"  aria-label="${row.label}" ${row.is_disabled === "1" ? 'disabled' : ''}></textarea>
         </div> `;
@@ -31,7 +31,7 @@ let fieldFactory = {
     createFile: (row) => {
         let div = document.createElement('div');
         div.innerHTML = `
-        <div class="mb-3">
+        <div class="mb-3" style="margin:0px 10px">
             <label for="formFileSm" class="form-label">${row.label}</label>
             <input class="form-control form-control-sm" id="${row.prop_name}" type="file">
         </div>`;
@@ -40,7 +40,7 @@ let fieldFactory = {
     createImage: (row) => {
         let div = document.createElement('div');
         div.innerHTML = `
-        <div class="mb-3">
+        <div class="mb-3" style="margin:0px 10px">
             <label for="formFileSm" class="form-label">${row.label}</label>
             <input class="form-control form-control-sm" id="${row.prop_name}" type="file">
             <img src="/img/card2.jpg" width="50px"/>
