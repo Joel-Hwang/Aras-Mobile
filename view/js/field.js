@@ -1,10 +1,13 @@
 let fieldFactory = {
     createText: (row) => {
         let div = document.createElement('div');
+        let type = 'text';
+        if(row.data_type == 'integer' || row.data_type == 'float' || row.data_type == 'decimal')
+            type = 'number';
         div.innerHTML = `
         <div class="input-group input-group-sm mb-3" style="max-width: 200px;">
             <span class="input-group-text" id="inputGroup-sizing-sm">${row.label}</span>
-            <input type="text" class="form-control" id="${row.prop_name}" aria-label="Sizing example input"
+            <input type="${type}" class="form-control" id="${row.prop_name}" aria-label="Sizing example input"
             aria-describedby="inputGroup-sizing-sm" ${row.is_disabled === "1" ? 'disabled' : ''}>
         </div> `;
         return div.firstElementChild;
@@ -84,30 +87,22 @@ let fieldFactory = {
         switch (row.field_type) {
             case "text":
                 return fieldFactory.createText(row);
-                break;
             case "date":
                 return fieldFactory.createDate(row);
-                break;
             case "textarea":
                 return fieldFactory.createTextArea(row);
-                break;
             case "checkbox":
                 return fieldFactory.createCheckBox(row);
-                break;
             case "dropdown":
                 return fieldFactory.createDropDown(row);
-                break;
             case "groupbox":
                 return fieldFactory.createGrupbox(row);
-                break;
             case "file item":
                 return fieldFactory.createFile(row);
-                break;
             case "image":
                 return fieldFactory.createImage(row);
             default:
                 return fieldFactory.createText(row);
-                break;
         }
     },
     getValue: async (row) => {

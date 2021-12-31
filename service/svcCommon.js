@@ -4,7 +4,7 @@ const axios = require("axios");
 let svcCommon = {
     getTransaction: async (token) => {
         let res = await axios.post(global.rootServer + "/vault/odata/vault.BeginTransaction",
-            { }, { headers: { Authorization: "Bearer " + token } });
+            {}, { headers: { Authorization: "Bearer " + token } });
         if (res == null || res.data == null) return null;
         return res.data.transactionId;
     },
@@ -45,6 +45,12 @@ let svcCommon = {
         , D.LEGEND
         , D.ORIENTATION
 		, E.NAME AS Prop_Name
+        , E.DATA_TYPE
+		, E.DATA_SOURCE
+		, E.FOREIGN_PROPERTY
+		, E.SCALE
+		, E.PREC
+		, E.STORED_LENGTH
         , CASE WHEN D.FIELD_TYPE = 'IMAGE' THEN 999
                WHEN D.FIELD_TYPE = 'FILE ITEM' THEN 990
                WHEN ISNULL(D.CONTAINER,'') = '' then 0 
@@ -78,16 +84,17 @@ let svcCommon = {
         return res.data.Item;
     },
 
-    createItem : async(token, itemType, body) => {
-        let res = await axios.post(`${global.apiServer}/${itemType}`,body,
-        { headers: { Authorization: "Bearer " + token } });
+    createItem: async (token, itemType, body) => {
+        let res = await axios.post(`${global.apiServer}/${itemType}`, body,
+            { headers: { Authorization: "Bearer " + token } });
         if (res == null || res.data == null) return null;
         return res.data;
+
     },
 
-    updateItem : async(token, itemType, body) => {
-        let res = await axios.patch(`${global.apiServer}/${itemType}('${body.id}')`,body,
-        { headers: { Authorization: "Bearer " + token } });
+    updateItem: async (token, itemType, body) => {
+        let res = await axios.patch(`${global.apiServer}/${itemType}('${body.id}')`, body,
+            { headers: { Authorization: "Bearer " + token } });
         if (res == null || res.data == null) return null;
         return res.data;
     }
