@@ -89,23 +89,57 @@
 </head>
 
 <body>
-    <h4> 4Tertert</h4>
-    <hr>
-    <div style="padding: 10px;">
-        <button id="btnEdit" type="button" class="btn btn-primary btn-edit"><i class="fa fa-edit"></i><span
-                class="btn-label">Edit</span></button>
-        <button id="btnSave" type="button" class="btn btn-outline-primary btn-save" onclick="save()"><i
-                class="fa fa-save"></i><span class="btn-label">Save</span></button>
-        <button id="btnDone" type="button" class="btn btn-primary btn-done"><i class="fa fa-check"></i><span
-                class="btn-label">Done</span></button>
-        <button id="btnWf" type="button" class="btn btn-success btn-workflow"><i class="fa fa-code-fork"
-                aria-hidden="true"></i><span class="btn-label">Workflow</span></button>
+    <h4> ZX_LABTEST</h4>
+
+    <div id="divCrtr">
+        <div class="input-group mb-3" style="width: calc(100% - 20px);">
+            <input id="ipKeyedName" type="text" class="form-control" placeholder="Search..." aria-label="Search..."
+                aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary" type="button" id="btnExpand" data-bs-toggle="collapse"
+                data-bs-target="#searachDetail" aria-expanded="true" aria-controls="searachDetail"><i
+                    class="fa fa-chevron-down"></i></button>
+            <button class="btn btn-outline-secondary" type="button" id="btnSearch"><i class="fa fa-search"></i></button>
+        </div>
+        <div class="accordion-item">
+            <div id="searachDetail" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body" style="display: flex; flex-wrap: wrap;">
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <label for="floatingInput">Email address</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                        <label for="floatingPassword">Password</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <label for="floatingInput">Email address</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <label for="floatingInput">Email address</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <label for="floatingInput">Email address</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <label for="floatingInput">Email address</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <label for="floatingInput">Email address</label>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
-
-    <div id="main" style="display: flex; flex-wrap: wrap;">
+    <div style="margin: 10px;">
         <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+            <a href="#" class="list-group-item list-group-item-action" aria-current="true">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">List group item heading</h5>
                     <small>3 days ago</small>
@@ -138,7 +172,6 @@
     <script src="/js/field.js"></script>
     <script src="/js/fileUtil.js"></script>
     <script>
-
     </script>
 </body>
 
