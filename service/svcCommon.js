@@ -26,6 +26,22 @@ let svcCommon = {
         if (res == null || res.data == null) return null;
         return res.data["SOAP-ENV:Envelope"]["SOAP-ENV:Body"].ApplyItemResponse.Result.Item;
     },
+    getCriteria: async (token, itemTypeId) => {
+        let sql = `
+    SELECT B.SORT_ORDER, B.NAME, B.LABEL, B.DATA_TYPE, B.DATA_SOURCE, B.IS_HIDDEN, B.IS_HIDDEN2
+      FROM innovator.ITEMTYPE A WITH(NOLOCK)
+     INNER JOIN innovator.PROPERTY B WITH(NOLOCK)
+        ON B.SOURCE_ID = A.ID
+     WHERE A.ID = '${itemTypeId}'
+       AND B.IS_HIDDEN = 0
+     ORDER BY sort_order
+        `;
+        let res = await axios.post(global.apiServer + "/method.ZX_Apply_SQL",
+            { sql: sql }, { headers: { Authorization: "Bearer " + token } });
+        if (res == null || res.data == null) return null;
+        return res.data["SOAP-ENV:Envelope"]["SOAP-ENV:Body"].ApplyItemResponse.Result.Item;
+    },
+
     getForm: async (token, itemTypeId, classification) => {
         if (!classification) classification = '';
         let sql = `
