@@ -103,24 +103,7 @@
         <div class="accordion-item">
             <div id="searachDetail" class="accordion-collapse collapse" aria-labelledby="headingOne"
                 data-bs-parent="#accordionExample">
-                <div class="accordion-body" style="display: flex; flex-wrap: wrap;">
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput">Email address</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                        <label for="floatingPassword">Password</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput">Email address</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput">Email address</label>
-                    </div>
-
+                <div id="criteria" class="accordion-body" style="display: flex; flex-wrap: wrap;">
                 </div>
             </div>
         </div>
@@ -168,6 +151,11 @@
         async function loadCriteria(){
             let result = await getRes('/criteria/' + sessionStorage.itemTypeId);
 			console.log(result);
+
+            for(let obj of result.data){
+                let comp = criteriaFactory.create(obj);
+                document.querySelector('#criteria').append(comp);
+            }
             /*
             {
    "status":200,

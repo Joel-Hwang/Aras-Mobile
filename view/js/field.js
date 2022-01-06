@@ -2,7 +2,7 @@ let fieldFactory = {
     createText: (row) => {
         let div = document.createElement('div');
         let type = 'text';
-        if(row.data_type == 'integer' || row.data_type == 'float' || row.data_type == 'decimal')
+        if (row.data_type == 'integer' || row.data_type == 'float' || row.data_type == 'decimal')
             type = 'number';
         div.innerHTML = `
         <div class="input-group input-group-sm mb-3" style="max-width: 200px;">
@@ -108,24 +108,64 @@ let fieldFactory = {
     getValue: async (row) => {
         debugger;
         let fileId = '';
-        switch(row.field_type){
+        switch (row.field_type) {
             case "file item":
                 fileId = await fileUtil.upload(row.prop_name);
                 return fileId;
-            break;
+                break;
             case "image":
                 fileId = await fileUtil.upload(row.prop_name);
                 return fileId;
-            break;
+                break;
             case "text":
                 return document.querySelector(`#${row.prop_name}`).value;
-            break;
+                break;
             case "checkbox":
-                return document.querySelector(`#${row.prop_name}`).value==='on'?1:0;
+                return document.querySelector(`#${row.prop_name}`).value === 'on' ? 1 : 0;
             default:
                 return null;
         }
     }
 }
+
+let criteriaFactory = {
+    createString: (obj) => {
+        let div = document.createElement('div');
+        div.innerHTML =  `
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="${obj.name}" placeholder="${obj.label}">
+            <label for="floatingInput">${obj.label}</label>
+        </div>
+        `;
+
+        return div.firstElementChild;
+    },
+    createNumber: (obj) => {
+        let div = document.createElement('div');
+        div.innerHTML =  `
+        <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="${obj.name}" placeholder="${obj.label}">
+            <label for="floatingInput">${obj.label}</label>
+        </div>
+        `;
+
+        return div.firstElementChild;
+    },
+    create: (row) => {
+        switch (row.data_type) {
+            case "string":
+            case "text":
+                return criteriaFactory.createString(row);
+            case "integer":
+            case "float":
+            case "decimal":
+                return criteriaFactory.createNumber(row);
+            default:
+                return criteriaFactory.createString(row);
+        }
+    },
+
+
+};
 
 
