@@ -73,6 +73,19 @@ router.get('/permission/:itemTypeId', async function (req, res) {
 
 });
 
+router.get('/search/:itemTypeId', async function (req, res) {
+  let token = await util.getToken(req);
+  let itemTypeId = req.params.itemTypeId;
+  let param = req.query.param;
+  let result = await svc.getItems(token, itemTypeId,param);
+
+  res.send({
+    status: 200,
+    data: result
+  });
+
+});
+
 router.post('/create/:itemType', async function (req, res) {
   try {
     let itemType = req.params.itemType;

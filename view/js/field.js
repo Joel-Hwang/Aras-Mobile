@@ -131,9 +131,9 @@ let fieldFactory = {
 let criteriaFactory = {
     createString: (obj) => {
         let div = document.createElement('div');
-        div.innerHTML =  `
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="${obj.name}" placeholder="${obj.label}">
+        div.innerHTML =  `8
+        <div class="form-floating mb-3" style="max-width: calc(50% - 20px);">
+            <input type="text" class="form-control criteria" id="${obj.name}" placeholder="${obj.label}">
             <label for="floatingInput">${obj.label}</label>
         </div>
         `;
@@ -143,8 +143,8 @@ let criteriaFactory = {
     createNumber: (obj) => {
         let div = document.createElement('div');
         div.innerHTML =  `
-        <div class="form-floating mb-3">
-            <input type="number" class="form-control" id="${obj.name}" placeholder="${obj.label}">
+        <div class="form-floating mb-3" style="max-width: calc(50% - 20px);">
+            <input type="number" class="form-control criteria" id="${obj.name}" placeholder="${obj.label}">
             <label for="floatingInput">${obj.label}</label>
         </div>
         `;
