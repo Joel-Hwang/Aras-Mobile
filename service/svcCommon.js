@@ -100,8 +100,23 @@ let svcCommon = {
         return res.data.Item;
     },
     getItems: async(token, itemType, param) => {
-        let res = await axios.get(`${global.apiServer}/${itemType}`,{ headers: { Authorization: "Bearer " + token } });
+        param = JSON.parse(param);
+        let filter = '';
+        let selector = '';
+        for(let prop in param){
+            selector += `,${prop}`;
+            if(!param[prop]) continue;
+            filter += `and contains(${prop},'${param[prop]}') `
+        }
+        filter = '$filter='+filter.substr(4);
+        selector = '$select='+selector.substr(1);
+        let res = await axios.get(`${global.apiServer}/${itemType}?${filter}&${selector}`,
+            { headers: { Authorization: "Bearer " + token, Prefer: "odata.maxpagesize=3" } }
+        );
+        return res.data
     },
+    
+
     createItem: async (token, itemType, body) => {
         let res = await axios.post(`${global.apiServer}/${itemType}`, body,
             { headers: { Authorization: "Bearer " + token } });
