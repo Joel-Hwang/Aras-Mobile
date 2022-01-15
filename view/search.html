@@ -89,37 +89,44 @@
 </head>
 
 <body>
-    <h4> 4Tertert</h4>
-    <hr>
-    <div style="padding: 10px;">
-        <button id="btnEdit" type="button" class="btn btn-primary btn-edit"><i class="fa fa-edit"></i><span
-                class="btn-label">Edit</span></button>
-        <button id="btnSave" type="button" class="btn btn-outline-primary btn-save" onclick="save()"><i
-                class="fa fa-save"></i><span class="btn-label">Save</span></button>
-        <button id="btnDone" type="button" class="btn btn-primary btn-done"><i class="fa fa-check"></i><span
-                class="btn-label">Done</span></button>
-        <button id="btnWf" type="button" class="btn btn-success btn-workflow"><i class="fa fa-code-fork"
-                aria-hidden="true"></i><span class="btn-label">Workflow</span></button>
+    <h4> ZX_LABTEST</h4>
 
+    <div id="divCrtr">
+        <div class="input-group mb-3" style="width: calc(100% - 20px);">
+            <input id="ipKeyedName" type="text" class="form-control" placeholder="Search..." aria-label="Search..."
+                aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary" type="button" id="btnExpand" data-bs-toggle="collapse"
+                data-bs-target="#searachDetail" aria-expanded="true" aria-controls="searachDetail"><i
+                    class="fa fa-chevron-down"></i></button>
+            <button class="btn btn-outline-secondary" type="button" id="btnSearch" onclick="search()"><i class="fa fa-search"></i></button>
+        </div>
+        <div class="accordion-item">
+            <div id="searachDetail" style="max-height: 150px; overflow-y: auto;" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample">
+                <div id="criteria" style="display: flex; flex-wrap: wrap;">
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div id="main" style="display: flex; flex-wrap: wrap;">
-        <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+    <div style="margin: 10px;">
+        <div class="list-group" id="mainGrid">
+            <a href="#" class="list-group-item list-group-item-action" aria-current="true">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">List group item heading</h5>
                     <small>3 days ago</small>
                 </div>
                 <p class="mb-1">Some placeholder content in a paragraph.</p>
                 <small>And some small print.</small>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
-                    <small class="text-muted">3 days ago</small>
+                <i class="fa fa-chevron-down" style="float: right;" data-bs-toggle="collapse"
+                    data-bs-target="#listDetail" aria-expanded="true" aria-controls="listDetail"></i>
+                <div id="listDetail" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample">
+                    <strong>asdasdasdasdasdasdasd asda sda sda sd asdasd</strong>
+                    <strong>asdasdasdasdasdasdasd asda sda sda sd asdasd</strong>
+                    <strong>asdasdasdasdasdasdasd asda sda sda sd asdasd</strong>
+                    <strong>asdasdasdasdasdasdasd asda sda sda sd asdasd</strong>
+                    <strong>asdasdasdasdasdasdasd asda sda sda sd asdasd</strong>
                 </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small class="text-muted">And some muted small print.</small>
             </a>
             <a href="#" class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between">
@@ -138,7 +145,91 @@
     <script src="/js/field.js"></script>
     <script src="/js/fileUtil.js"></script>
     <script>
+        window.onload = async () => {
+            await loadCriteria();
+        }
 
+        async function search(){
+            let criteria = getCriteria();
+            let result = await getRes('/search/'+sessionStorage.itemTypeName+'?param='+JSON.stringify(criteria));
+            console.log(result);
+            let mainGrid = document.querySelector('#mainGrid');
+            for(let row of result.data.value){
+                mainGrid.appendChild(addResult(row));
+            }
+        }
+
+        function getCriteria(){
+            let criterias = document.querySelectorAll('.criteria');
+            let param = {};
+            for(let crtr of criterias){
+                param[crtr.id] = crtr.value;
+            }
+            return param;
+        }
+
+        function addResult(row){
+            let criteria = getCriteria();
+            let preferText = '';
+            let detailText = '';
+            let i = 0;
+            for(let prop in criteria){
+                if(i++ < 6)
+                    preferText += row[prop] + '\t';
+                else 
+                    detailText += row[prop] + '\t';
+            }
+            let html = `
+            <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                <p class="mb-1">${preferText}</p>
+                <small>And some small print.</small>
+                <i class="fa fa-chevron-down" style="float: right;" data-bs-toggle="collapse"
+                    data-bs-target="#listDetail" aria-expanded="true" aria-controls="listDetail"></i>
+                <div id="listDetail" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample">
+                    ${detailText}
+                </div>
+            </a>`;
+
+            let div = document.createElement('div');
+            div.innerHTML = html;
+            return div.firstElementChild;
+        }
+        /*
+        @odata.id: "ZX_LABTEST('0635015FC78941E0AB758D688823A833')"
+itemtype: "31673F55485E4295B2E5011E44671561"
+name: "asd"
+_boolean: "1"
+_date: null
+_decimal: 123
+_file@aras.keyed_name: "burger.png"
+_file@odata.associationLink: "ZX_LABTEST('0635015FC78941E0AB758D688823A833')/_file/$ref"
+_file@odata.navigationLink: "ZX_LABTEST('0635015FC78941E0AB758D688823A833')/_file"
+_fileter_list: null
+_float: 123
+_foreign: null
+_foreign2: null
+_foreign3: null
+_image: "7BB4683AE87543748707CFBBCCF91954"
+_integer: 123
+_item@odata.associationLink: "ZX_LABTEST('0635015FC78941E0AB758D688823A833')/_item/$ref"
+_item@odata.navigationLink: "ZX_LABTEST('0635015FC78941E0AB758D688823A833')/_item"
+_list: null
+_list2: null
+_string: "asd"
+_text: null
+        */
+
+        async function loadCriteria(){
+            let result = await getRes('/criteria/' + sessionStorage.itemTypeId);
+			console.log(result);
+
+            for(let obj of result.data){
+                
+                let comp = criteriaFactory.create(obj);
+                document.querySelector('#criteria').append(comp);
+            }
+        }
     </script>
 </body>
 

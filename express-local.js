@@ -64,7 +64,7 @@ app.get('/arasbody/:itemTypeId', async function (req, res) {
     res.end(fs.readFileSync(__dirname + '/view/' + fileName + '.html'));
 });
 
-app.get('/search/:itemTypeId', async function (req, res) {
+app.get('/view/:itemTypeId', async function (req, res) {
     if (!req.session.userId) {
         res.writeHead(200);
         res.end(fs.readFileSync(__dirname + '/view/login.html'));
@@ -75,7 +75,7 @@ app.get('/search/:itemTypeId', async function (req, res) {
     let itemType = await commonSvc.getItemType(token, itemTypeId);
     let fileName = '';
     if (fs.existsSync(__dirname + '/view/' + itemType.name + '/search.html')) {
-        fileName = itemType.name + '/search';
+        fileName = itemType.name + '/search.html';
     } else {
         fileName = 'search';
     }

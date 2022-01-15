@@ -305,7 +305,7 @@
         async function search(){
             let sidebar2Title = document.querySelector('#sidebar2Title');
             let arasbody = document.querySelector('#arasbody');
-            arasbody.src = 'search/'+sidebar2Title.dataset.itemType;
+            arasbody.src = 'view/'+sidebar2Title.dataset.itemType;
             sessionStorage.itemTypeId=sidebar2Title.dataset.itemType;
             sessionStorage.itemTypeName=sidebar2Title.dataset.itemTypeName;
         }
