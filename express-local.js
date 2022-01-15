@@ -11,8 +11,8 @@ const http = require('http').createServer(app);
 //global.authServer = "http://203.228.101.197/digitalpcc/oauthserver/connect/token";
 //global.databaseName = "DigitalPCC_Test";
 global.rootServer = "http://192.168.0.4/innovatorServer";
-global.apiServer = rootServer+"/server/odata";
-global.authServer = rootServer+"/oauthserver/connect/token";
+global.apiServer = rootServer + "/server/odata";
+global.authServer = rootServer + "/oauthserver/connect/token";
 global.databaseName = "InnovatorSolutions";
 
 
@@ -22,14 +22,6 @@ app.use(express.static('view'));
 
 app.use('/', require('./controller/ctrCommon'));
 app.use('/', require('./controller/ctrLogin'));
-
-app.use(
-    session({
-        secret: '@#@$MYSIGN#@$#$',
-        resave: false,
-        saveUninitialized: true,
-    })
-);
 
 app.get('/', function (req, res) {
     if (req.session.userId) {
@@ -67,7 +59,7 @@ app.get('/arasbody/:itemTypeId', async function (req, res) {
         fileName = 'detail';
     }
 
-    
+
     res.writeHead(200);
     res.end(fs.readFileSync(__dirname + '/view/' + fileName + '.html'));
 });
@@ -88,7 +80,7 @@ app.get('/search/:itemTypeId', async function (req, res) {
         fileName = 'search';
     }
 
-    
+
     res.writeHead(200);
     res.end(fs.readFileSync(__dirname + '/view/' + fileName + '.html'));
 });

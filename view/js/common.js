@@ -105,7 +105,7 @@ var common = {
     },
     hideLoading: function () {
         var node = document.querySelector('#loadingImg');
-        if (node) $(node).remove();
+        if (node) node.remove();
     }
 }
 

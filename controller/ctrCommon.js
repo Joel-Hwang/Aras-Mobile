@@ -7,12 +7,7 @@ let router = express.Router();
 router.use(express.json());
 //router.use(bodyParser.json());
 //router.use(bodyParser.urlencoded({ extended: false }));
-router.use(session({
-  secret: '@#@$MYSIGN#@$#$',
-  resave: false,
-  saveUninitialized: true
-}));
-
+util.session(router);
 router.get('/transaction', async (req, res) => {
   let token = await util.getToken(req);
   let transaction = await svc.getTransaction(token);
