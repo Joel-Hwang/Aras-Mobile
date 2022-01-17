@@ -102,14 +102,14 @@ let svcCommon = {
     getItems: async(token, itemType, param) => {
         param = JSON.parse(param);
         let filter = '';
-        let selector = '';
+        let selector = 'id,keyed_name';
         for(let prop in param){
             selector += `,${prop}`;
             if(!param[prop]) continue;
             filter += `and contains(${prop},'${param[prop]}') `
         }
-        filter = '$filter='+filter.substr(4);
-        selector = '$select='+selector.substr(1);
+        filter = '$filter='+filter.substring(4);
+        selector = '$select='+selector;
         let res = await axios.get(`${global.apiServer}/${itemType}?${filter}&${selector}`,
             { headers: { Authorization: "Bearer " + token, Prefer: "odata.maxpagesize=3" } }
         );

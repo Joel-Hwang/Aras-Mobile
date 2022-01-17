@@ -110,32 +110,6 @@
     </div>
     <div style="margin: 10px;">
         <div class="list-group" id="mainGrid">
-            <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
-                    <small>3 days ago</small>
-                </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small>And some small print.</small>
-                <i class="fa fa-chevron-down" style="float: right;" data-bs-toggle="collapse"
-                    data-bs-target="#listDetail" aria-expanded="true" aria-controls="listDetail"></i>
-                <div id="listDetail" class="accordion-collapse collapse" aria-labelledby="headingOne"
-                    data-bs-parent="#accordionExample">
-                    <strong>asdasdasdasdasdasdasd asda sda sda sd asdasd</strong>
-                    <strong>asdasdasdasdasdasdasd asda sda sda sd asdasd</strong>
-                    <strong>asdasdasdasdasdasdasd asda sda sda sd asdasd</strong>
-                    <strong>asdasdasdasdasdasdasd asda sda sda sd asdasd</strong>
-                    <strong>asdasdasdasdasdasdasd asda sda sda sd asdasd</strong>
-                </div>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
-                    <small class="text-muted">3 days ago</small>
-                </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small class="text-muted">And some muted small print.</small>
-            </a>
         </div>
     </div>
 
@@ -169,25 +143,30 @@
         }
 
         function addResult(row){
+            debugger;
             let criteria = getCriteria();
             let preferText = '';
             let detailText = '';
             let i = 0;
             for(let prop in criteria){
-                if(i++ < 6)
-                    preferText += row[prop] + '\t';
+                if(prop.indexOf('@') > 0) continue;
+                if(!row[prop]) continue;
+
+                if(i++ < 4)
+                    preferText += `<div style="margin-right:25px;"><dt>${prop}</dt><dd>${row[prop]}</dd></div>`;
                 else 
-                    detailText += row[prop] + '\t';
+                    detailText += `<div style="margin-right:25px;"><dt>${prop}</dt><dd>${row[prop]}</dd></div>`;
             }
             let html = `
             <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-                <p class="mb-1">${preferText}</p>
-                <small>And some small print.</small>
-                <i class="fa fa-chevron-down" style="float: right;" data-bs-toggle="collapse"
-                    data-bs-target="#listDetail" aria-expanded="true" aria-controls="listDetail"></i>
-                <div id="listDetail" class="accordion-collapse collapse" aria-labelledby="headingOne"
-                    data-bs-parent="#accordionExample">
+                <h5 class="mb-1">${row.keyed_name}</h5>
+                <div class="mb-1" style = "display: flex; flex-wrap: wrap; ">${preferText}</div>
+                <i class="fa fa-chevron-down" style="float: right; justify-contnet: left;" data-bs-toggle="collapse"
+                    data-bs-target="#_${row.id}" aria-expanded="true" aria-controls="_${row.id}"></i>
+                <div id="_${row.id}" class="accordion-collapse collapse">
+                    <div style = "display: flex; flex-wrap: wrap; ">
                     ${detailText}
+                    </div>
                 </div>
             </a>`;
 
