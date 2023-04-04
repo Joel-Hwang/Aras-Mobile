@@ -1,6 +1,8 @@
 let fileUtil = {
-    vaultUrl : "http://192.168.0.4/innovatorServer/vault/odata/",
-    serverUrl : "http://192.168.0.4/innovatorServer/Server/odata/",
+    //vaultUrl : "http://192.168.0.4/innovatorServer/vault/odata/",
+    //serverUrl : "http://192.168.0.4/innovatorServer/Server/odata/",
+    vaultUrl : "http://203.228.101.197/digitalpcc/vault/odata/",
+    serverUrl : "http://203.228.101.197/digitalpcc/Server/odata/",
     upload: async function(propName){
         let transaction = await getRes('/transaction');
         let file_id = generateNewGuid();
@@ -46,7 +48,7 @@ function getFileInput(prop) {
 
 
 
-async function uploadFile(file, file_id, transaction_id, token, chunk_size = 10000) {
+async function uploadFile(file, file_id, transaction_id, token, chunk_size = 1000000) {
     var results = [];
     var size = file.size;
     var start = 0;
@@ -95,7 +97,7 @@ function getUploadHeaders(escaped_name, start_range, end_range, file_size, trans
     // start the upload headers array with a clone of the auth_headers array
     var headers = {
         "authorization": "Bearer " + token,
-        "Content-Disposition": "attachment; filename*=utf-8''" + escaped_name,
+        "Content-Disposition": "attachment;filename*=utf-8''" + escaped_name,
         "Content-Range": "bytes " + start_range + "-" + end_range + "/" + file_size,
         "Content-Type": "application/octet-stream",
         "transactionid": transaction_id

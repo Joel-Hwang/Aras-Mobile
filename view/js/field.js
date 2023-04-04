@@ -106,7 +106,6 @@ let fieldFactory = {
         }
     },
     getValue: async (row) => {
-        debugger;
         let fileId = '';
         switch (row.field_type) {
             case "file item":
