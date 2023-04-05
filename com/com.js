@@ -50,30 +50,35 @@ let com = {
         formData.append('password', pw);
         formData.append('database', global.databaseName);
 
-        let res = await axios.post(global.authServer, formData, { headers: formData.getHeaders() });
+        let res = await com.post(global.authServer, formData, { headers: formData.getHeaders() });
         if (res == null || res.data == null) return null;
         return res.data.access_token;
-
-        /*const options = {
-            uri: global.authServer,
-            method: "POST",
-            json: true,
-            form: {
-                grant_type: "password",
-                scope: "Innovator",
-                client_id: "IOMApp",
-                username: id,
-                password: pw,
-                database: global.databaseName,
-            }
-        };
-        var result = await com.requestSync(options);
-        return result.access_token;*/
     },
     getToken3: async function (req) {
         let id = req.session.userId || '';
         let pw = req.session.pw || '';
         return await com.getToken2(id, pw);
+    },
+    post: async function(url, body, header){
+        try{
+            let res = await axios.post(url, body, header);
+            return res;
+        }catch(e){
+            console.log(e);
+        }finally{
+
+        }
+    },
+
+    get: async function(url, data){
+        try{
+            let res = await axios.get(url, data);
+            return res;
+        }catch(e){
+            console.log(e);
+        }finally{
+
+        }
     }
 }
 

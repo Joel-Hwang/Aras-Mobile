@@ -10,15 +10,16 @@ router.post('/login', async function (req, res) {
   let id = req.body.userId;
   let pw = req.body.userPw;
   let result = await svc.login(id, pw);
-  if (result == null) res.send({ status: 500 });
-
+  if (result == null) {
+    res.status(500).send('wrong Information');
+    return;
+  }
   req.session.keyed_name = result.keyed_name;
   req.session.userId = result.login_name;
   req.session.pw = pw;
   req.session.save();
 
-  res.send({
-    status: 200,
+  res.status(200).send({
     userId: req.session.userId,
     keyed_name: req.session.keyed_name,
     cookie: {

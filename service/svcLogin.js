@@ -4,6 +4,7 @@ const axios = require("axios");
 let svcLogin = {
     login: async (id, pw) => {
         let token = await util.getToken(id, pw);
+        if(token == null) return null;
         let res = await axios.get(global.apiServer + "/user",
         {
             headers: {
@@ -16,24 +17,8 @@ let svcLogin = {
         });
         if(res == null || res.data == null) return null;
         return res.data.value[0];
-        /*const options = {
-            url: global.apiServer + "/user",
-            method: "GET",
-            responseType:"JSON",
-            qs: {
-                $filter: "login_name eq '" + id + "'",
-            },
-            headers: {
-                Authorization: "Bearer " + token,
-            },
-        };
-        var result = await util.send(options);
-
-        return JSON.parse(result);*/
-
     },
     createCommonCode: async function (param) {
-
         return 'createCommonCode';
     },
     retrieveCommonCodeList: async function (param) {

@@ -7,13 +7,13 @@ let commonSvc = require('./service/svcCommon');
 let util = require('./com/com');
 const http = require('http').createServer(app);
 
-//global.apiServer = "http://203.228.101.197/digitalpcc/server/odata";
-//global.authServer = "http://203.228.101.197/digitalpcc/oauthserver/connect/token";
-//global.databaseName = "DigitalPCC_Test";
-global.rootServer = "http://192.168.0.4/innovatorServer";
-global.apiServer = rootServer + "/server/odata";
-global.authServer = rootServer + "/oauthserver/connect/token";
-global.databaseName = "InnovatorSolutions";
+
+global.apiServer = "http://203.228.101.197/digitalpcc/server/odata";
+global.authServer = "http://203.228.101.197/digitalpcc/oauthserver/connect/token";
+global.databaseName = "DigitalPCC_Test";
+//global.apiServer = rootServer + "/server/odata";
+//global.authServer = rootServer + "/oauthserver/connect/token";
+//global.databaseName = "InnovatorSolutions";
 
 
 app.locals.pretty = true;
