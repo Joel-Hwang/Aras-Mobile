@@ -16,6 +16,7 @@ let svcLogin = {
 
         });
         if(res == null || res.data == null) return null;
+        res.data.value[0].token = token;
         return res.data.value[0];
     },
     createCommonCode: async function (param) {

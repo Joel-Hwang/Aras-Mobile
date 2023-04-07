@@ -68,17 +68,28 @@ router.get('/permission/:itemTypeId', async function (req, res) {
 
 });
 
-router.get('/search/:itemTypeId', async function (req, res) {
+router.get('/list/:itemType', async function (req, res) {
   let token = await util.getToken(req);
-  let itemTypeId = req.params.itemTypeId;
+  let itemType = req.params.itemType;
   let param = req.query.param;
-  let result = await svc.getItems(token, itemTypeId,param);
+  let result = await svc.getItems(token, itemType,param);
 
   res.send({
     status: 200,
     data: result
   });
+});
 
+router.get('/detail/:itemType/:id', async function (req, res) {
+  let token = await util.getToken(req);
+  let itemType = req.params.itemType;
+  let id = req.params.id;
+  let result = await svc.getItem(token, itemType,id);
+
+  res.send({
+    status: 200,
+    data: result
+  });
 });
 
 router.post('/create/:itemType', async function (req, res) {

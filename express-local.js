@@ -17,7 +17,10 @@ global.databaseName = "DigitalPCC_Test";
 
 
 app.locals.pretty = true;
-app.use(cors());
+app.use(cors({
+    origin:['http://localhost:3000', 'http://203.228.117.46:3000'],
+    credentials: true
+  }));
 app.use(express.static('view'));
 
 app.use('/', require('./controller/ctrCommon'));

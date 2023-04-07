@@ -116,6 +116,12 @@ let svcCommon = {
         return res.data
     },
     
+    getItem: async(token, itemType, id) => {
+        let res = await axios.get(`${global.apiServer}/${itemType}('${id}')`,
+            { headers: { Authorization: "Bearer " + token} }
+        );
+        return res.data
+    },
 
     createItem: async (token, itemType, body) => {
         let res = await axios.post(`${global.apiServer}/${itemType}`, body,

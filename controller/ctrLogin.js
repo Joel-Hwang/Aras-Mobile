@@ -22,6 +22,7 @@ router.post('/login', async function (req, res) {
   res.status(200).send({
     userId: req.session.userId,
     keyed_name: req.session.keyed_name,
+    token:result.token,
     cookie: {
       secure: false,
       httpOnly: false,
