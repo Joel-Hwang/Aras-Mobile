@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+
+<body style="margin: 0px; padding: 0px;">
+    <video></video>
+    <script>
+        //test.html과 상호작용
+        window.onload = () => {
+            detect();
+        };
+
+        async function detect() {
+            const barcodeDetector = new BarcodeDetector();
+            const mediaStream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: "environment" }
+            });
+
+            const video = document.querySelector("video");
+            video.style.width = '100%';
+            //video.style.height = '50%';
+            video.srcObject = mediaStream;
+            video.autoplay = true;
+
+            function render() {
+                barcodeDetector
+                    .detect(video)
+                    .then((barcodes) => {
+                        //barcodes.forEach((barcode) => {
+                            if(parent)
+                                parent.postMessage({ action: "scan", data: barcodes[0].rawValue },parent.location.href);
+                                
+                        //});
+                    })
+                    .catch(error => { 
+                        document.querySelector('#failReason').textContent = error; 
+                    });
+            }
+
+            (function renderLoop() {
+                requestAnimationFrame(renderLoop);
+                render();
+            })();
+        }
+
+    </script>
+</body>
+
+</html>

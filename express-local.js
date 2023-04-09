@@ -22,6 +22,7 @@ app.use(cors({
     credentials: true
   }));
 app.use(express.static('view'));
+app.use(express.static('build'));
 app.use((error, req, res, next) => {
     console.error(error);
     // 예외 처리 로직
@@ -33,17 +34,37 @@ app.use('/', require('./controller/ctrLogin'));
 app.get('/', function (req, res) {
     if (req.session.userId) {
         res.writeHead(200);
-        res.end(fs.readFileSync(__dirname + '/view/main.html'));
+        res.end(fs.readFileSync(__dirname + '/build/index.html'));
         return;
     }
     res.writeHead(200);
     res.end(fs.readFileSync(__dirname + '/view/login.html'));
 });
 
+/*app.get('/', function (req, res) {
+    if (req.session.userId) {
+        res.writeHead(200);
+        res.end(fs.readFileSync(__dirname + '/view/main.html'));
+        return;
+    }
+    res.writeHead(200);
+    res.end(fs.readFileSync(__dirname + '/view/login.html'));
+});*/
+
 app.get('/main', function (req, res) {
     if (!req.session.userId) {
         res.writeHead(200);
         res.end(fs.readFileSync(__dirname + '/view/login.html'));
+        return;
+    }
+    res.writeHead(200);
+    res.end(fs.readFileSync(__dirname + '/view/main.html'));
+});
+
+app.get('/barcode', function (req, res) {
+    if (!req.session.userId) {
+        res.writeHead(200);
+        res.end(fs.readFileSync(__dirname + '/view/barcode.html'));
         return;
     }
     res.writeHead(200);
