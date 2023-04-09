@@ -102,22 +102,19 @@ let svcCommon = {
     getItems: async(token, itemType, param) => {
         param = JSON.parse(param);
         let filter = '';
-        let selector = 'id,keyed_name';
         for(let prop in param){
-            selector += `,${prop}`;
             if(!param[prop]) continue;
-            filter += `and contains(${prop},'${param[prop]}') `
+            filter += `and contains(${prop},'${param[prop]}')`
         }
         filter = '$filter='+filter.substring(4);
-        selector = '$select='+selector;
-        let res = await axios.get(`${global.apiServer}/${itemType}?${filter}&${selector}`,
+        let res = await axios.get(`${global.apiServer}/${itemType}?${filter}&$select=*`,
             { headers: { Authorization: "Bearer " + token, Prefer: "odata.maxpagesize=3" } }
         );
         return res.data
     },
     
     getItem: async(token, itemType, id) => {
-        let res = await axios.get(`${global.apiServer}/${itemType}('${id}')`,
+        let res = await axios.get(`${global.apiServer}/${itemType}('${id}')?$select=*`,
             { headers: { Authorization: "Bearer " + token} }
         );
         return res.data
@@ -136,7 +133,19 @@ let svcCommon = {
             { headers: { Authorization: "Bearer " + token } });
         if (res == null || res.data == null) return null;
         return res.data;
-    }
+    },
+
+    download: async (token, fileId) => {
+        try{
+            let res = await axios.post(global.apiServer + "/method.GetFileUrl",
+            { fileId: fileId }, { headers: { Authorization: "Bearer " + token } });
+            if (res == null || res.data == null) return null;
+            return res.data;
+        }catch(e){
+            return null;
+        }
+        
+    },
 
 
 

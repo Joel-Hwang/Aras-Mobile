@@ -69,27 +69,42 @@ router.get('/permission/:itemTypeId', async function (req, res) {
 });
 
 router.get('/list/:itemType', async function (req, res) {
-  let token = await util.getToken(req);
-  let itemType = req.params.itemType;
-  let param = req.query.param;
-  let result = await svc.getItems(token, itemType,param);
+  try{
+      let token = await util.getToken(req);
+      let itemType = req.params.itemType;
+      let param = req.query.param;
+      let result = await svc.getItems(token, itemType,param);
 
-  res.send({
-    status: 200,
-    data: result
-  });
+      res.send({
+        status: 200,
+        data: result
+      });
+   
+  } catch (err) {
+    res.send({
+      status: 500,
+      data: null
+    });
+  }
 });
 
 router.get('/detail/:itemType/:id', async function (req, res) {
-  let token = await util.getToken(req);
-  let itemType = req.params.itemType;
-  let id = req.params.id;
-  let result = await svc.getItem(token, itemType,id);
-
-  res.send({
-    status: 200,
-    data: result
-  });
+  try{
+    let token = await util.getToken(req);
+    let itemType = req.params.itemType;
+    let id = req.params.id;
+    let result = await svc.getItem(token, itemType,id);
+    
+    res.send({
+      status: 200,
+      data: result
+    });
+  } catch (err) {
+    res.send({
+      status: 500,
+      data: null
+    });
+  }
 });
 
 router.post('/create/:itemType', async function (req, res) {
@@ -137,6 +152,24 @@ router.post('/update/:itemType', async function (req, res) {
 router.post('/logout', async function (req, res) {
   //let result = await svc.retrieveCommonCodeList(JSON.stringify(req.query));
   res.send('');
+});
+
+router.get('/download/:fileId', async function (req, res) {
+  try {
+    let token = await util.getToken(req);
+    let fileId = req.params.fileId;
+    let result = await svc.download(token, fileId);
+    
+    res.send({
+      status: 200,
+      data: result
+    });
+  } catch (err) {
+    res.send({
+      status: 500,
+      data: null
+    });
+  }
 });
 
 

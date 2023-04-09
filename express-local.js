@@ -7,7 +7,7 @@ let commonSvc = require('./service/svcCommon');
 let util = require('./com/com');
 const http = require('http').createServer(app);
 
-
+global.rootServer = "http://203.228.101.197/digitalpcc";
 global.apiServer = "http://203.228.101.197/digitalpcc/server/odata";
 global.authServer = "http://203.228.101.197/digitalpcc/oauthserver/connect/token";
 global.databaseName = "DigitalPCC_Test";
@@ -22,7 +22,11 @@ app.use(cors({
     credentials: true
   }));
 app.use(express.static('view'));
-
+app.use((error, req, res, next) => {
+    console.error(error);
+    // 예외 처리 로직
+});
+  
 app.use('/', require('./controller/ctrCommon'));
 app.use('/', require('./controller/ctrLogin'));
 
