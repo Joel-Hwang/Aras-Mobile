@@ -40,8 +40,8 @@ app.get('/', function (req, res) {
     res.writeHead(200);
     res.end(fs.readFileSync(__dirname + '/view/login.html'));
 });
-
-/*app.get('/', function (req, res) {
+/*
+app.get('/', function (req, res) {
     if (req.session.userId) {
         res.writeHead(200);
         res.end(fs.readFileSync(__dirname + '/view/main.html'));
@@ -49,8 +49,8 @@ app.get('/', function (req, res) {
     }
     res.writeHead(200);
     res.end(fs.readFileSync(__dirname + '/view/login.html'));
-});*/
-
+});
+*/
 app.get('/main', function (req, res) {
     if (!req.session.userId) {
         res.writeHead(200);
