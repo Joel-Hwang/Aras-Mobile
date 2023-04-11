@@ -19,7 +19,8 @@ global.databaseName = "DigitalPCC_Test";
 app.locals.pretty = true;
 app.use(cors({
     origin:['http://localhost:3000', 'http://203.228.117.46:3000'],
-    credentials: true
+    credentials: true,
+    exposedHeaders: ['Access-Control-Allow-Credentials']
   }));
 app.use(express.static('view'));
 app.use(express.static('build'));
@@ -62,13 +63,8 @@ app.get('/main', function (req, res) {
 });
 
 app.get('/barcode', function (req, res) {
-    if (!req.session.userId) {
-        res.writeHead(200);
-        res.end(fs.readFileSync(__dirname + '/view/barcode.html'));
-        return;
-    }
     res.writeHead(200);
-    res.end(fs.readFileSync(__dirname + '/view/main.html'));
+    res.end(fs.readFileSync(__dirname + '/view/barcode.html'));
 });
 
 app.get('/arasbody/:itemTypeId', async function (req, res) {

@@ -11,7 +11,6 @@ let com = {
                 secret: '@#@$MYSIGN#@$#$',
                 resave: false,
                 saveUninitialized: true,
-                
             })
         );
     },
